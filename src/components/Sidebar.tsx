@@ -1,4 +1,4 @@
-import { ArrowDownTrayIcon, ArrowUpTrayIcon, BeakerIcon, BookmarkIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon, BeakerIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router";
 
 const tabs = [
@@ -10,17 +10,11 @@ const tabs = [
 	{ route: "/events", label: "Events", icon: QuestionMarkCircleIcon },
 ];
 
-const modActions = [
-	{ route: "/a", label: "Import Mod", icon: ArrowDownTrayIcon },
-	{ route: "/aa", label: "Save Mod", icon: BookmarkIcon },
-	{ route: "/aaa", label: "Export Mod", icon: ArrowUpTrayIcon },
-]
-
 export default function Sidebar({
 	appVersion = "0.0.0"
 }) {
   return (
-	<nav className="w-20 h-[calc(100vh-32px)] rounded-lg flex flex-col p-3 justify-between overflow-hidden">
+	<nav className="w-20 h-[calc(100vh-32px)] rounded-lg flex flex-col px-3 justify-between overflow-hidden">
 		<div className="flex flex-col space-y-2">
 			{tabs.map((tab, index) => {
 				const Icon = tab.icon;
@@ -30,8 +24,8 @@ export default function Sidebar({
 						{({ isActive }) => (
 							<div className={
 								isActive
-								? "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer bg-primary transition-colors duration-300"
-								: "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-300"
+								? "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer bg-primary transition-colors duration-150"
+								: "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150"
 							}
 							title={tab.label}
 							>
@@ -43,26 +37,31 @@ export default function Sidebar({
 			})}
 		</div>
 		<div className="flex flex-col space-y-2">
-			{modActions.map((item, index) => {
-				const Icon = item.icon;
 
-				// TODO: This should be buttons
-				return (
-					<NavLink to={item.route} key={index}>
-						{({ isActive }) => (
-							<div className={
-								isActive
-								? "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer bg-primary transition-colors duration-300"
-								: "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-300"
-							}
-							title={item.label}
-							>
-								<Icon className="w-5 h-5"/>
-							</div>
-						)}
-					</NavLink>
-				);
-			})}
+			<button
+			onClick={() => console.log("import")}
+			>
+				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Import Mod">
+					<ArrowDownTrayIcon className="w-5 h-5"/>
+				</div>
+			</button>
+
+			<button
+			onClick={() => console.log("save")}
+			>
+				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Save Mod">
+					<BookmarkIcon className="w-5 h-5"/>
+				</div>
+			</button>
+
+			<button
+			onClick={() => console.log("export")}
+			>
+				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Export Mod">
+					<CloudArrowUpIcon className="w-5 h-5"/>
+				</div>
+			</button>
+
 			<a href="https://github.com/kevinbrasileiro/forge-the-spire" target="_blank" className="text-xs text-center mb-2 hover:underline">v{appVersion}</a>
 		</div>
 	</nav>
