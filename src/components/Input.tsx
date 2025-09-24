@@ -29,7 +29,7 @@ HTMLInputElement | HTMLTextAreaElement, InputProps
     ref
   ) => {
     const inputClasses = `border-black-light hover:border-primary bg-black-dark px-3 py-2 font-light text-base focus:outline-none rounded-lg border-2 focus:border-primary transition-colors w-full
-    ${error ? "border-error" : ""}
+    ${error ? "border-danger" : ""}
     ${
       props.type === "number"
         ? "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -73,7 +73,7 @@ HTMLInputElement | HTMLTextAreaElement, InputProps
           )}
         </div>
 
-        {error && <p className="text-error text-xs mt-1">{error}</p>}
+        {error && <p className="text-danger text-xs mt-1">{error}</p>}
       </div>
     );
   }

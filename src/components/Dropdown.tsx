@@ -100,7 +100,7 @@ export default function Dropdown({
             focus:outline-none rounded-lg cursor-pointer
             border-2 ${
               error
-                ? "border-error"
+                ? "border-danger"
                 : isOpen
                 ? "border-primary"
                 : "border-black-light"
@@ -168,7 +168,7 @@ export default function Dropdown({
           )}
       </div>
 
-      {error && <p className="text-error text-xs mt-1">{error}</p>}
+      {error && <p className="text-danger text-xs mt-1">{error}</p>}
     </div>
   )
 }

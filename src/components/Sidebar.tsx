@@ -14,7 +14,7 @@ export default function Sidebar({
 	appVersion = "0.0.0"
 }) {
   return (
-	<nav className="w-20 h-[calc(100vh-32px)] rounded-lg flex flex-col px-3 justify-between overflow-hidden">
+	<nav className="w-20 h-screen rounded-lg flex flex-col p-4 justify-between overflow-hidden">
 		<div className="flex flex-col space-y-2">
 			{tabs.map((tab, index) => {
 				const Icon = tab.icon;

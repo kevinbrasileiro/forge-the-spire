@@ -1,28 +1,54 @@
 import { useContext } from "react"
 import { UserDataContext } from "../UserDataContext"
 import type { CardData } from "../utils/userDataTypes"
+import { PlusIcon } from "@heroicons/react/24/solid"
+import Button from "../components/Button"
 
 export default function CardsPage() {
   const { userData, setUserData } = useContext(UserDataContext)
-  return (
-    <main>
-      {userData.cards.map((card) => {
-        return (
-          <p>{card.title}</p>
-        )
-      })}
-      <button
-        onClick={() => {
-          const newCard: CardData = {
-            color: 'red',
-            title: 'strike'
-          }
 
-          setUserData({...userData, cards: [...userData.cards, newCard]})
-        }
-        }>
-        Add Card
-      </button>
-    </main>
+  const handleNewCard = () => {
+    const newCard: CardData = {
+      id: crypto.randomUUID(),
+      title: 'New Card',
+      color: 'Red',
+      description: 'A freshly added card.',
+      type: 'Attack',
+      rarity: 'Common',
+      target: 'Enemy',
+      cost: 1,
+    }
+
+    setUserData((prev) => ({
+      ...prev,
+      cards: [...prev.cards, newCard],
+    }))
+  }
+  return (
+    <div className="flex flex-col justify-center items-center ">
+      <div className="max-w-7xl">
+        <h1 className="text-3xl tracking-widest text-center">
+          Forge the Spire
+        </h1>
+        <h1 className="text-xl text-gold/75 font-light tracking-widest mb-6 text-center">
+          Cards
+        </h1>
+        <div className="flex justify-center mb-12">
+          <Button 
+            className="flex text-center" 
+            icon={ <PlusIcon className="w-5 h-5"/> } 
+            variant="primary"
+            onClick={handleNewCard}
+          >  
+            Add Card
+          </Button>
+        </div>
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-16">
+        {userData.cards.map((card) => (
+          <div className="bg-primary text-center w-48 h-72">{card.title}</div>
+        ))}
+      </div>
+    </div>
   )
 }
