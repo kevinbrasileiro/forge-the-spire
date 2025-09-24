@@ -8,12 +8,12 @@ const APP_VERSION = "0.1.0"
 
 function AppContent() {
   return (
-    <div className="h-screen m-4 flex gap-x-4 overflow-hidden">
+    <div className="h-[calc(100vh-32px)] m-4 flex gap-x-4 overflow-hidden">
       <Sidebar appVersion={APP_VERSION}/>
-      <Routes>
-        <Route index element={<CardsPage />}/>
-        <Route path="/config" element={<ConfigPage />}/>
-      </Routes>
+        <Routes>
+          <Route index element={<CardsPage />}/>
+          <Route path="/config" element={<ConfigPage />}/>
+        </Routes>
     </div>
   )
 }
