@@ -1,18 +1,21 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { UserDataContext } from "../UserDataContext"
 import type { CardData } from "../utils/userDataTypes"
 import { PlusIcon } from "@heroicons/react/24/solid"
 import Button from "../components/Button"
+import StsCard from "../components/StsCard"
+import EditStsCard from "../components/EditStsCard"
 
 export default function CardsPage() {
   const { userData, setUserData } = useContext(UserDataContext)
+  const [ editingCard, setEditingCard ] = useState<CardData | null>(null)
 
   const handleNewCard = () => {
     const newCard: CardData = {
       id: crypto.randomUUID(),
-      title: 'New Card',
+      title: 'Strike',
       color: 'Red',
-      description: 'A freshly added card.',
+      description: 'Deal !D! Damage',
       type: 'Attack',
       rarity: 'Common',
       target: 'Enemy',
@@ -46,9 +49,14 @@ export default function CardsPage() {
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-16">
         {userData.cards.map((card) => (
-          <div className="bg-primary text-center w-48 h-72">{card.title}</div>
+          <StsCard card={card} key={card.id} onClick={() => setEditingCard(card)}/>
         ))}
       </div>
+      {editingCard && (
+        <EditStsCard 
+          card={editingCard}
+        />
+      )}
     </div>
   )
 }

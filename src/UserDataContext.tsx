@@ -16,7 +16,7 @@ const USER_DATA_KEY = "forgethespire-user-data";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const UserDataContext = createContext<UserDataContextType>({
-  userData: { cards: [], characters: [] },
+  userData: { cards: [], characters: [], modMeta: {modID: "forge-test", modName: "Forge Test"} },
   setUserData: () => {},
 });
 
@@ -31,12 +31,14 @@ export const UserDataProvider = ({ children }: ContextProviderProps) => {
       return stored
         ? JSON.parse(stored)
         : {
+            modMeta: {modID: "test", modName: "Test"},
             cards: [],
-            characters: []
+            characters: [],
           };
     } catch (err) {
       console.error("Failed to parse userData from localStorage", err);
       return {
+        modMeta: {modID: "forge-test", modName: "Forge Test"},
         cards: [],
         characters: [],
       };

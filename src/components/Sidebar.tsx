@@ -1,4 +1,4 @@
-import { ArrowDownTrayIcon, BeakerIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router";
 
 const tabs = [
@@ -8,6 +8,7 @@ const tabs = [
 	{ route: "/relics", label: "Relics", icon: GiftIcon },
 	{ route: "/potions", label: "Potions", icon: BeakerIcon },
 	{ route: "/events", label: "Events", icon: QuestionMarkCircleIcon },
+	{ route: "/powers", label: "Buffs/Debuffs", icon: BoltIcon },
 ];
 
 export default function Sidebar({
