@@ -1,13 +1,34 @@
 import { DocumentTextIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import type { CardData } from "../utils/userDataTypes";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface EditStsCardProps {
+  isOpen: boolean
   card: CardData
+  onClose: () => void
 }
 
-export default function EditStsCard({card}: EditStsCardProps) {
+export default function EditStsCard({isOpen, card, onClose}: EditStsCardProps) {
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
+    const modalRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   const tabs = [
     { id: "info", label: "Card Info", icon: DocumentTextIcon },
@@ -16,7 +37,7 @@ export default function EditStsCard({card}: EditStsCardProps) {
 
   return (
     <div className="fixed inset-0 flex bg-black-light/80 backdrop-blur-sm items-center justify-center z-50">
-      <div className="flex items-start gap-8 max-h-[90vh]">
+      <div ref={modalRef} className="flex items-start gap-8 max-h-[90vh]">
         <div className="bg-black-dark border-black-light rounded-lg w-[100vh] h-[90vh] flex flex-col relative overflow-hidden">
           <div className="flex">
             {tabs.map((tab) => {

@@ -14,10 +14,10 @@ export default function CardsPage() {
     const newCard: CardData = {
       id: crypto.randomUUID(),
       title: 'Strike',
-      color: 'green',
-      description: 'Deal !D! Damage',
-      type: 'skill',
-      rarity: 'rare',
+      color: 'red',
+      description: `Deal 6 Damage`,
+      type: 'attack',
+      rarity: 'common',
       target: 'enemy',
       cost: 1,
     }
@@ -54,7 +54,9 @@ export default function CardsPage() {
       </div>
       {editingCard && (
         <EditStsCard 
+          isOpen={!!editingCard}
           card={editingCard}
+          onClose={() => setEditingCard(null)}
         />
       )}
     </div>

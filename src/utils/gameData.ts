@@ -1,10 +1,10 @@
 export const VANILLA_COLORS = [
-  {label: "Red", value: "RED"},
-  {label: "Green", value: "GREEN"},
-  {label: "Blue", value: "BLUE"},
-  {label: "Purple", value: "PURPLE"},
-  {label: "Colorless", value: "COLORLESS"},
-  {label: "Curse", value: "CURSE"},
+  {label: "Red", value: "red"},
+  {label: "Green", value: "green"},
+  {label: "Blue", value: "blue"},
+  {label: "Purple", value: "purple"},
+  {label: "Colorless", value: "colorless"},
+  {label: "Curse", value: "curse"},
 ]
 
 export const VANILLA_POWERS = [
