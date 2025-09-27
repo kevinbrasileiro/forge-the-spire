@@ -15,7 +15,7 @@ export default function CardsPage() {
       id: crypto.randomUUID(),
       title: 'Strike',
       color: 'red',
-      description: `Deal 6 Damage`,
+      description: `Deal 6 damage`,
       type: 'attack',
       rarity: 'common',
       target: 'enemy',
@@ -27,6 +27,23 @@ export default function CardsPage() {
       cards: [...prev.cards, newCard],
     }))
   }
+
+  const handleSaveCard = (updatedCard: CardData) => {
+    setUserData((prev) => ({
+      ...prev,
+      cards: prev.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card))
+    }))
+    setEditingCard(null)
+  }
+
+  const handleDeleteCard = (cardId: string) => {
+    setUserData((prev) => ({
+      ...prev,
+      cards: prev.cards.filter((prevCard) => prevCard.id !== cardId)
+    }))
+    setEditingCard(null)
+  }
+
   return (
     <div className="flex flex-col justify-center items-center ">
       <div className="max-w-7xl">
@@ -57,6 +74,8 @@ export default function CardsPage() {
           isOpen={!!editingCard}
           card={editingCard}
           onClose={() => setEditingCard(null)}
+          onSave={handleSaveCard}
+          onDelete={handleDeleteCard}
         />
       )}
     </div>

@@ -1,15 +1,20 @@
+import { getRarityByValue, getTypeByValue } from "../utils/gameData";
 import type { CardData } from "../utils/userDataTypes";
 
 interface StsCardProps {
   card: CardData
-  onClick: () => void
+  onClick?: () => void
 }
 
 export default function StsCard({card, onClick}: StsCardProps) {
+  const raritySrc = getRarityByValue(card.rarity)?.src
+
   const backgroundSrc = `assets/backgrounds/bg_${card.type}_${card.color}.png`
-  const bannerSrc = `assets/banners/banner_${card.rarity}.png`
-  const frameSrc = `assets/frames/frame_${card.type}_${card.rarity}.png`
+  const bannerSrc = `assets/banners/banner_${raritySrc}.png`
+  const frameSrc = `assets/frames/frame_${card.type}_${raritySrc}.png`
+
   const energySrc = `assets/energy/card_${card.color}_orb.png`
+  const isCurseOrStatus = card.type === "curse" || card.type === "status"
 
   return (
     <div className="relative w-[250px] h-[375px]" onClick={onClick}>
@@ -31,28 +36,30 @@ export default function StsCard({card, onClick}: StsCardProps) {
         className="absolute w-full h-full z-20 object-cover"
       />
 
-      <img
-        src={energySrc}
-        alt={`${card.color} orb`}
-        className="absolute w-full h-full z-40 object-cover"
-      />
+      {!isCurseOrStatus && (
+        <img
+          src={energySrc}
+          alt={`${card.color} orb`}
+          className="absolute w-full h-full z-40 object-cover"
+        />
+      )}
 
-      <p className="absolute top-7.5 w-13 text-center text-3xl text-white z-50 text-shadow-[1px_1px_0px_#000]">
-        {card.cost}
+      {!isCurseOrStatus && (
+        <p className="absolute top-7.5 w-13 text-center text-3xl text-black-light font-bold z-50">
+          {card.cost}
+        </p>
+      )}
+
+      <p className="absolute bottom-40.75 w-full text-center text-black-light text-xs z-50">
+        {getTypeByValue(card.type)?.label}
       </p>
 
-      <p className="absolute bottom-40.75 w-full text-center text-black-light text-xs z-50 drop-shadow-md">
-        {card.type}
-      </p>
-
-      <p className="absolute top-11 w-full text-center text-lg text-white z-50 text-shadow-[1px_1px_0px_#000]">
+      <p className="absolute top-11 w-full text-center text-lg text-white z-50 text-shadow-[2px_2px_0px_#000]">
         {card.title}
       </p>
 
-      <p className="absolute bottom-24 w-full text-center text-white text-sm z-50 drop-shadow-md">
-        Deal 8 damage.
-        <br />
-        Apply 2 vulnerbale
+      <p className="absolute bottom-25 w-full px-10 text-center text-white text-sm z-50">
+        {card.description}
       </p>
     </div>
   )

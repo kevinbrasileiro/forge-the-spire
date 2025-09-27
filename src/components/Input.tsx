@@ -6,7 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextArea
   className?: string
   multiline?: boolean
   height?: string
-  value: string
+  value?: string | number
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 }

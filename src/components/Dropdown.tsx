@@ -139,7 +139,7 @@ export default function Dropdown({
                 width: `${dropdownPosition.width}px`,
                 zIndex: 9999,
               }}
-              className="bg-black-dark border-2 border-black-light rounded-lg shadow-lg max-h-60 overflow-y-auto custom-scrollbar"
+              className="bg-black-dark border-2 border-black-light rounded-lg shadow-lg max-h-64 overflow-y-auto custom-scrollbar"
               onMouseDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >

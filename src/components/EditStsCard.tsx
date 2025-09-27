@@ -1,18 +1,26 @@
 import { DocumentTextIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import type { CardData } from "../utils/userDataTypes";
 import { useEffect, useRef, useState } from "react";
+import Button from "./Button";
+import StsCard from "./StsCard";
+import { Input } from "./Input";
+import Dropdown from "./Dropdown";
+import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
 
 interface EditStsCardProps {
   isOpen: boolean
   card: CardData
   onClose: () => void
+  onSave: (card: CardData) => void
+  onDelete: (cardId: string) => void
 }
 
-export default function EditStsCard({isOpen, card, onClose}: EditStsCardProps) {
+export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: EditStsCardProps) {
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
-    const modalRef = useRef<HTMLDivElement>(null)
+  const [formData, setFormData] = useState<CardData>(card)
+  const modalRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
+  useEffect(() => {
     if (!isOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -20,6 +28,7 @@ export default function EditStsCard({isOpen, card, onClose}: EditStsCardProps) {
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
+        onSave(formData)
         onClose();
       }
     };
@@ -28,7 +37,14 @@ export default function EditStsCard({isOpen, card, onClose}: EditStsCardProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onSave, formData]);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({
+      ...formData,
+      [field]: value
+    })
+  }
 
   const tabs = [
     { id: "info", label: "Card Info", icon: DocumentTextIcon },
@@ -61,15 +77,69 @@ export default function EditStsCard({isOpen, card, onClose}: EditStsCardProps) {
               );
             })}
           </div>
-          
-            <div>{card.title}</div>
-            <div>{card.description}</div>
-            <div>{card.color}</div>
-            <div>{card.type}</div>
-            <div>{card.rarity}</div>
-            <div>{card.cost}</div>
-            <div>{card.target}</div>
-        </div> 
+
+          <div className="flex flex-col h-full justify-between p-4">
+            <div className="flex flex-col gap-4">
+              <Input
+                label="Card Name"
+                value={formData.title} 
+                onChange={(e) => handleInputChange("title", e.target.value)}
+              />
+              <Dropdown 
+                label="Card Color"
+                value={formData.color} 
+                onChange={(e) => handleInputChange("color", e)}
+                options={colorsDropdownOptions}
+              />
+              <Input
+                label="Energy Cost"
+                type="number"
+                value={formData.cost} 
+                onChange={(e) => handleInputChange("cost", e.target.value)}
+              />
+              <Dropdown 
+                label="Card Type"
+                value={formData.type} 
+                onChange={(e) => handleInputChange("type", e)}
+                options={typesDropdownOptions}
+              />
+              <Dropdown 
+                label="Card Rarity"
+                value={formData.rarity} 
+                onChange={(e) => handleInputChange("rarity", e)}
+                options={raritiesDropdownOptions}
+              />
+              <Input
+                label="Card Description"
+                multiline
+                value={formData.description} 
+                onChange={(e) => handleInputChange("description", e.target.value)}
+              />
+            </div>
+
+            <footer className="flex gap-4">
+              <Button
+               variant="danger" 
+               onClick={() => {if (window.confirm(`Are you sure you want to delete ${formData.title}?`)) onDelete(card.id)} }
+               className="px-8"
+              >
+                Delete
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => onSave(formData)}
+                className="flex-1"
+              >
+                Save Changes
+              </Button>
+            </footer>
+          </div>
+        </div>
+
+        <div className="flex-shrink-0 pl-24 my-auto">
+          <StsCard card={formData}/>
+        </div>
+
       </div>
     </div>
   )

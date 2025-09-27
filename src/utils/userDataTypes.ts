@@ -9,15 +9,15 @@ export interface ModMeta {
   modID: string
 }
 export interface CardData {
-  id?: string
+  id: string
   title: string
   color: string
-  description?: string
+  description: string
 
-  type?: "attack" | "skill" | "power" | "status" | "curse"
-  rarity?: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
-  target?: "self" | "enemy" | "all Enemies"
-  cost?: number
+  type: "attack" | "skill" | "power" | "status" | "curse"
+  rarity: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
+  target: "self" | "enemy" | "all Enemies"
+  cost: number
 
   // ...
 }
