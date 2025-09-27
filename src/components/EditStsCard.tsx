@@ -1,4 +1,4 @@
-import { Cog6ToothIcon, DocumentTextIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
+import { DocumentTextIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import type { CardData } from "../utils/userDataTypes";
 import { useState } from "react";
 
@@ -7,12 +7,11 @@ interface EditStsCardProps {
 }
 
 export default function EditStsCard({card}: EditStsCardProps) {
-  const [activeTab, setActiveTab] = useState<"visual" | "description" | "advanced">("visual");
+  const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
 
   const tabs = [
-    { id: "visual", label: "Card Info", icon: DocumentTextIcon },
-    { id: "description", label: "Usage", icon: PuzzlePieceIcon },
-    { id: "advanced", label: "Advanced", icon: Cog6ToothIcon },
+    { id: "info", label: "Card Info", icon: DocumentTextIcon },
+    { id: "usage", label: "Usage", icon: PuzzlePieceIcon },
   ];
 
   return (
@@ -27,7 +26,7 @@ export default function EditStsCard({card}: EditStsCardProps) {
                 <button
                   key={tab.id}
                   onClick={() =>
-                    setActiveTab(tab.id as "visual" | "description")
+                    setActiveTab(tab.id as "info" | "usage" )
                   }
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm bg-black-dark transition-all relative border-b-2 ${
                     isActive
@@ -41,8 +40,14 @@ export default function EditStsCard({card}: EditStsCardProps) {
               );
             })}
           </div>
-
+          
             <div>{card.title}</div>
+            <div>{card.description}</div>
+            <div>{card.color}</div>
+            <div>{card.type}</div>
+            <div>{card.rarity}</div>
+            <div>{card.cost}</div>
+            <div>{card.target}</div>
         </div> 
       </div>
     </div>

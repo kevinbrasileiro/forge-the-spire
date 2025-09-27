@@ -3,8 +3,10 @@ export const VANILLA_COLORS = [
   {label: "Green", value: "GREEN"},
   {label: "Blue", value: "BLUE"},
   {label: "Purple", value: "PURPLE"},
+  {label: "Colorless", value: "COLORLESS"},
+  {label: "Curse", value: "CURSE"},
 ]
 
 export const VANILLA_POWERS = [
-  {label: "Vulnerable", value: "vulnerable", logic: "..."}
+  {label: "Vulnerable", value: "vulnerable"}
 ]

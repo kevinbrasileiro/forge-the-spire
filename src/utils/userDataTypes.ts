@@ -14,9 +14,9 @@ export interface CardData {
   color: string
   description?: string
 
-  type?: "Attack" | "Skill" | "Power" | "Status" | "Curse"
-  rarity?: "Basic" | "Common" | "Uncommon" | "Rare" | "Special" | "Curse"
-  target?: "Self" | "Enemy" | "All Enemies"
+  type?: "attack" | "skill" | "power" | "status" | "curse"
+  rarity?: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
+  target?: "self" | "enemy" | "all Enemies"
   cost?: number
 
   // ...
