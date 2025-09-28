@@ -16,7 +16,7 @@ export interface CardData {
 
   type: "attack" | "skill" | "power" | "status" | "curse"
   rarity: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
-  target: "self" | "enemy" | "all Enemies"
+  target: "self" | "enemy" | "all enemies" | "everyone"
   cost: number
 
   // ...

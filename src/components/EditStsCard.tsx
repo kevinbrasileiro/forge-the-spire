@@ -79,43 +79,53 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
           </div>
 
           <div className="flex flex-col h-full justify-between p-4">
-            <div className="flex flex-col gap-4">
+            {activeTab === "info" && (<div className="flex flex-col gap-4">
+              <div className="flex gap-x-4">
+                <div className="w-16">
+                  <Input
+                    label="Cost"
+                    type="number"
+                    value={formData.cost} 
+                    onChange={(e) => handleInputChange("cost", e.target.value)}
+                    className="w-8 text-center"
+                    min={-2}
+                    step={1}
+                  />
+                </div>
+                <Input
+                  label="Name"
+                  value={formData.title} 
+                  onChange={(e) => handleInputChange("title", e.target.value)}
+                />
+              </div>
+              <div className="flex gap-x-4">
+                <Dropdown 
+                  label="Color"
+                  value={formData.color} 
+                  onChange={(e) => handleInputChange("color", e)}
+                  options={colorsDropdownOptions}
+                />
+                <Dropdown 
+                  label="Type"
+                  value={formData.type} 
+                  onChange={(e) => handleInputChange("type", e)}
+                  options={typesDropdownOptions}
+                />
+                <Dropdown 
+                  label="Rarity"
+                  value={formData.rarity} 
+                  onChange={(e) => handleInputChange("rarity", e)}
+                  options={raritiesDropdownOptions}
+                />
+              </div>
               <Input
-                label="Card Name"
-                value={formData.title} 
-                onChange={(e) => handleInputChange("title", e.target.value)}
-              />
-              <Dropdown 
-                label="Card Color"
-                value={formData.color} 
-                onChange={(e) => handleInputChange("color", e)}
-                options={colorsDropdownOptions}
-              />
-              <Input
-                label="Energy Cost"
-                type="number"
-                value={formData.cost} 
-                onChange={(e) => handleInputChange("cost", e.target.value)}
-              />
-              <Dropdown 
-                label="Card Type"
-                value={formData.type} 
-                onChange={(e) => handleInputChange("type", e)}
-                options={typesDropdownOptions}
-              />
-              <Dropdown 
-                label="Card Rarity"
-                value={formData.rarity} 
-                onChange={(e) => handleInputChange("rarity", e)}
-                options={raritiesDropdownOptions}
-              />
-              <Input
-                label="Card Description"
+                label="Description"
                 multiline
+                height="92px"
                 value={formData.description} 
                 onChange={(e) => handleInputChange("description", e.target.value)}
               />
-            </div>
+            </div>)}
 
             <footer className="flex gap-4">
               <Button

@@ -45,8 +45,8 @@ export default function StsCard({card, onClick}: StsCardProps) {
       )}
 
       {!isCurseOrStatus && (
-        <p className="absolute top-7.5 w-13 text-center text-3xl text-black-light font-bold z-50">
-          {card.cost}
+        <p className="absolute top-7.25 w-14 text-center text-3xl text-black-light font-bold z-50">
+          {card.cost >= 0 ? card.cost : "X"}
         </p>
       )}
 
@@ -58,7 +58,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
         {card.title}
       </p>
 
-      <p className="absolute bottom-25 w-full px-10 text-center text-white text-sm z-50">
+      <p className="absolute bottom-25 w-full px-10 text-center text-white z-50">
         {card.description}
       </p>
     </div>

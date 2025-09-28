@@ -15,7 +15,7 @@ export default function CardsPage() {
       id: crypto.randomUUID(),
       title: 'Strike',
       color: 'red',
-      description: `Deal 6 damage`,
+      description: `Deal 6 damage.`,
       type: 'attack',
       rarity: 'common',
       target: 'enemy',
@@ -26,6 +26,7 @@ export default function CardsPage() {
       ...prev,
       cards: [...prev.cards, newCard],
     }))
+    setEditingCard(newCard)
   }
 
   const handleSaveCard = (updatedCard: CardData) => {
@@ -64,7 +65,7 @@ export default function CardsPage() {
           </Button>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-16">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-8">
         {userData.cards.map((card) => (
           <StsCard card={card} key={card.id} onClick={() => setEditingCard(card)}/>
         ))}
