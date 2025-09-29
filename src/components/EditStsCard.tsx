@@ -6,6 +6,7 @@ import { Input } from "./Input";
 import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
+import Tooltip from "./Tooltip";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -171,10 +172,12 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   className="hidden"
                   ref={fileInputRef}
                 />
-                <div className="flex flex-col w-full mb-pb-2">
+                <div className="flex flex-col w-full">
                   <div className="mx-auto flex gap-x-1 items-center">
                     <p>Card Art</p>
-                    <QuestionMarkCircleIcon className="w-4 h-4" title="The game renders card images as-is, so if they aren't cropped they'll stick out of frame"/>
+                    <Tooltip content="The game renders card images as-is, so if they aren't cropped they'll stick out of frame">
+                      <QuestionMarkCircleIcon className="w-4 h-4"/>
+                    </Tooltip>
                   </div>
                   <div
                     onDragOver={(e) => e.preventDefault()}
@@ -192,7 +195,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                     <Button
                       onClick={() => setFormData({...formData, art: ""})}
                       variant="danger"
-                      className="w-full"
+                      className="w-full mb-2"
                       size="sm"
                     >
                       Remove Card Art
