@@ -49,7 +49,7 @@ export default function CardsPage() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center ">
+    <div className="flex flex-col justify-center items-center">
       <div className="max-w-7xl">
         <h1 className="text-3xl tracking-widest text-center">
           Forge the Spire
