@@ -1,4 +1,3 @@
-import { DocumentTextIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import type { CardData } from "../utils/userDataTypes";
 import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
@@ -6,7 +5,7 @@ import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
-import { PhotoIcon } from "@heroicons/react/24/solid";
+import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon } from "@heroicons/react/24/solid";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -48,8 +47,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
     })
   }
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null
+  const handleImageUpload = (file?: File) => {
     if (file) {
       const reader = new FileReader()
       reader.onload = () => {
@@ -158,30 +156,47 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   options={raritiesDropdownOptions}
                 />
               </div>
-              <Input
-                label="Description"
-                multiline
-                height="140px"
-                value={formData.description} 
-                onChange={(e) => handleInputChange("description", e.target.value)}
-              />              
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                ref={fileInputRef}
-              />
-              <Button
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full"
-                size="sm"
-                icon={<PhotoIcon className="h-4 w-4" />}
-              >
-                {formData.art
-                  ? "Change Card Art"
-                  : "Upload Card Art"}
-              </Button>
+              <div className="flex gap-x-4">
+                <Input
+                  label="Description"
+                  multiline
+                  height="140px"
+                  value={formData.description} 
+                  onChange={(e) => handleInputChange("description", e.target.value)}
+                />     
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e.target.files?.[0])}
+                  className="hidden"
+                  ref={fileInputRef}
+                />
+                <div className="flex flex-col w-full mb-pb-2">
+                  <p className="mx-auto">Card Art</p>
+                  <div
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault()
+                      handleImageUpload(e.dataTransfer.files?.[0])
+                    }}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="h-full mb-2 border-2 border-dashed border-black-light rounded-lg flex items-center justify-center gap-x-1 text-gold/40 cursor-pointer hover:bg-black-light transition-colors"
+                  >
+                    <PhotoIcon className="w-4 h-4"/> 
+                    {formData.art ? "Change Card Art" : "Upload Card Art"}
+                  </div>
+                  {formData.art && (
+                    <Button
+                      onClick={() => setFormData({...formData, art: ""})}
+                      variant="danger"
+                      className="w-full"
+                      size="sm"
+                    >
+                      Remove Card Art
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>)}
 
             <footer className="flex gap-4">

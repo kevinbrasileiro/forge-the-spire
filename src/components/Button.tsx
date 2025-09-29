@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
     primary:
       "bg-black-dark border-primary text-primary hover:bg-black-light transition-colors",
     secondary:
-      "bg-black-dark border-black-lighter hover:bg-black-light",
+      "bg-black-dark border-black-light hover:bg-black-light",
     danger:
       "bg-black-dark text-danger border-danger hover:bg-danger hover:border-danger hover:text-gold",
   }[variant];
