@@ -1,5 +1,7 @@
 import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router";
+import Tooltip from "./Tooltip";
+import { useRef, useState } from "react";
 
 const tabs = [
 	{ route: "/config", label: "Config", icon: Cog6ToothIcon },
@@ -14,6 +16,9 @@ const tabs = [
 export default function Sidebar({
 	appVersion = "0.0.0"
 }) {
+	const [hoveredTab, setHoveredTab] = useState<string | null>("")
+	const hoverTimeoutRef = useRef<number | undefined>(undefined);
+
   return (
 	<nav className="w-20 h-screen rounded-lg flex flex-col p-4 justify-between overflow-hidden">
 		<div className="flex flex-col space-y-2">
@@ -23,15 +28,26 @@ export default function Sidebar({
 				return (
 					<NavLink to={tab.route} key={index}>
 						{({ isActive }) => (
-							<div className={
-								isActive
-								? "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer bg-primary transition-colors duration-150"
-								: "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150"
-							}
-							title={tab.label}
-							>
-								<Icon className="w-5 h-5"/>
-							</div>
+							<Tooltip content={tab.label} show={hoveredTab === tab.label} position="right">
+								<div className={
+									isActive
+									? "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer bg-primary transition-colors duration-150"
+									: "w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150"
+								}
+                  onMouseEnter={() => {
+                    clearTimeout(hoverTimeoutRef.current);
+                    hoverTimeoutRef.current = window.setTimeout(() => {
+                      setHoveredTab(tab.label);
+                    }, 500);
+                  }}
+                  onMouseLeave={() => {
+                    clearTimeout(hoverTimeoutRef.current);
+                    setHoveredTab(null);
+                  }}
+								>
+									<Icon className="w-5 h-5"/>
+								</div>
+							</Tooltip>
 						)}
 					</NavLink>
 				);

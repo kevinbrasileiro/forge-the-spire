@@ -28,7 +28,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
         <img 
           src={card.art} 
           alt="Card Art"
-          className="absolute top-17 left-8 w-46 h-33 z-15" 
+          className="absolute top-17.5 left-8 w-46 h-33 z-15" 
           style={{
             maskImage: `url(/assets/portrait-masks/${card.type}-mask.png)`,
             maskRepeat: "no-repeat",

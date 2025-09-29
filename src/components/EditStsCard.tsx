@@ -5,7 +5,7 @@ import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
-import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon } from "@heroicons/react/24/solid";
+import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -53,7 +53,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
       reader.onload = () => {
         const img = new Image()
         img.onload = () => {
-          const finalImgData = resizeImage(img, 500, 380)
+          const finalImgData = resizeImage(img, 250, 190)
 
           setFormData({
             ...formData,
@@ -68,8 +68,8 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
   const resizeImage = (
     img: HTMLImageElement,
-    width = 500,
-    height = 380
+    width = 250,
+    height = 190
   ): string => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -172,7 +172,10 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   ref={fileInputRef}
                 />
                 <div className="flex flex-col w-full mb-pb-2">
-                  <p className="mx-auto">Card Art</p>
+                  <div className="mx-auto flex gap-x-1 items-center">
+                    <p>Card Art</p>
+                    <QuestionMarkCircleIcon className="w-4 h-4" title="The game renders card images as-is, so if they aren't cropped they'll stick out of frame"/>
+                  </div>
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
