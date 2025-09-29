@@ -24,11 +24,13 @@ export default function StsCard({card, onClick}: StsCardProps) {
         className="absolute w-full h-full z-10 object-cover"
       />
 
-      {/* <img 
-        src={card.art} 
-        alt=""
-        className="absolute top-0 left-0 w-20 h-10"
-      /> */}
+      {card.art && (
+        <img 
+          src={card.art} 
+          alt="Card Art"
+          className={`absolute top-17 left-8 w-46 h-33 z-15 mask-[url(/assets/portrait-masks/${card.type}-mask.png)] mask-no-repeat mask-cover`}
+        />
+      )}
 
       <img
         src={bannerSrc}

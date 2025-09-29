@@ -14,7 +14,7 @@ export default function CardsPage() {
     const newCard: CardData = {
       id: crypto.randomUUID(),
       title: 'Strike',
-      art: "aa",
+      art: "",
       description: `Deal 6 damage.`,
 
       color: 'red',

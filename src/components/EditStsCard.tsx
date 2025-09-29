@@ -55,7 +55,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
       reader.onload = () => {
         const img = new Image()
         img.onload = () => {
-          const finalImgData = resizeImage(img, 250, 190)
+          const finalImgData = resizeImage(img, 500, 380)
 
           setFormData({
             ...formData,
@@ -70,8 +70,8 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
   const resizeImage = (
     img: HTMLImageElement,
-    width = 250,
-    height = 190
+    width = 500,
+    height = 380
   ): string => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
