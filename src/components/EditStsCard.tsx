@@ -6,6 +6,7 @@ import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -19,6 +20,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
   const [formData, setFormData] = useState<CardData>(card)
   const modalRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -45,6 +47,44 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
       [field]: value
     })
   }
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        const img = new Image()
+        img.onload = () => {
+          const finalImgData = resizeImage(img, 250, 190)
+
+          setFormData({
+            ...formData,
+            art: finalImgData
+          })
+        }
+        img.src = reader.result as string
+      }
+      reader.readAsDataURL(file)
+    };
+  }
+
+  const resizeImage = (
+    img: HTMLImageElement,
+    width = 250,
+    height = 190
+  ): string => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = width;
+    canvas.height = height;
+
+    if (ctx) {
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(img, 0, 0, width, height);
+    }
+    return canvas.toDataURL("image/png");
+  };
 
   const tabs = [
     { id: "info", label: "Card Info", icon: DocumentTextIcon },
@@ -121,10 +161,27 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
               <Input
                 label="Description"
                 multiline
-                height="92px"
+                height="140px"
                 value={formData.description} 
                 onChange={(e) => handleInputChange("description", e.target.value)}
+              />              
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+                ref={fileInputRef}
               />
+              <Button
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full"
+                size="sm"
+                icon={<PhotoIcon className="h-4 w-4" />}
+              >
+                {formData.art
+                  ? "Change Card Art"
+                  : "Upload Card Art"}
+              </Button>
             </div>)}
 
             <footer className="flex gap-4">

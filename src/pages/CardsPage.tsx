@@ -14,12 +14,15 @@ export default function CardsPage() {
     const newCard: CardData = {
       id: crypto.randomUUID(),
       title: 'Strike',
-      color: 'red',
+      art: "aa",
       description: `Deal 6 damage.`,
+
+      color: 'red',
+      cost: 1,
       type: 'attack',
       rarity: 'common',
+
       target: 'enemy',
-      cost: 1,
     }
 
     setUserData((prev) => ({

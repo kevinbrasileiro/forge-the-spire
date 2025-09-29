@@ -11,13 +11,15 @@ export interface ModMeta {
 export interface CardData {
   id: string
   title: string
-  color: string
+  art?: string
   description: string
-
+  
+  color: string
+  cost: number
   type: "attack" | "skill" | "power" | "status" | "curse"
   rarity: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
+
   target: "self" | "enemy" | "all enemies" | "everyone"
-  cost: number
 
   // ...
 }

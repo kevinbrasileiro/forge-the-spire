@@ -14,7 +14,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
   const frameSrc = `assets/frames/frame_${card.type}_${raritySrc}.png`
 
   const energySrc = `assets/energy/card_${card.color}_orb.png`
-  const isCurseOrStatus = card.type === "curse" || card.type === "status"
+  const shouldOrbAppear = card.type !== "curse" && card.type !== "status" && card.cost != -2
 
   return (
     <div className="relative w-[250px] h-[375px]" onClick={onClick}>
@@ -23,6 +23,12 @@ export default function StsCard({card, onClick}: StsCardProps) {
         alt={`${card.type} ${card.color} background`}
         className="absolute w-full h-full z-10 object-cover"
       />
+
+      {/* <img 
+        src={card.art} 
+        alt=""
+        className="absolute top-0 left-0 w-20 h-10"
+      /> */}
 
       <img
         src={bannerSrc}
@@ -36,7 +42,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
         className="absolute w-full h-full z-20 object-cover"
       />
 
-      {!isCurseOrStatus && (
+      {shouldOrbAppear && (
         <img
           src={energySrc}
           alt={`${card.color} orb`}
@@ -44,7 +50,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
         />
       )}
 
-      {!isCurseOrStatus && (
+      {shouldOrbAppear && (
         <p className="absolute top-7.25 w-14 text-center text-3xl text-black-light font-bold z-50">
           {card.cost >= 0 ? card.cost : "X"}
         </p>
@@ -58,7 +64,10 @@ export default function StsCard({card, onClick}: StsCardProps) {
         {card.title}
       </p>
 
-      <p className="absolute bottom-25 w-full px-10 text-center text-white z-50">
+      <p 
+        className="absolute w-full px-10 text-center text-base/tight text-white z-50"
+        style={{whiteSpace: 'pre', bottom: `${7 - 0.7 * card.description.split(/\n/).length}rem` }}
+      >
         {card.description}
       </p>
     </div>
