@@ -42,3 +42,10 @@ export const getRarityByValue = (value: string) => {
 }
 
 export const raritiesDropdownOptions = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, value: rarity.value}))
+
+export const VANILLA_TARGETS = [
+  {label: "Enemy", value: "enemy"},
+  {label: "ALL Enemies", value: "all"},
+  {label: "Self", value: "self"},
+  {label: "Everyone", value: "everyone"},
+]

@@ -4,7 +4,7 @@ import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
-import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions} from "../utils/gameData";
+import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 
@@ -118,19 +118,9 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
           </div>
 
           <div className="flex flex-col h-full justify-between p-4">
-            {activeTab === "info" && (<div className="flex flex-col gap-4">
+            {activeTab === "info" && (
+            <div className="flex flex-col gap-4">
               <div className="flex gap-x-4">
-                <div className="w-16">
-                  <Input
-                    label="Cost"
-                    type="number"
-                    value={formData.cost} 
-                    onChange={(e) => handleInputChange("cost", e.target.value)}
-                    className="w-8 text-center"
-                    min={-2}
-                    step={1}
-                  />
-                </div>
                 <Input
                   label="Name"
                   value={formData.title} 
@@ -203,7 +193,40 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   )}
                 </div>
               </div>
-            </div>)}
+            </div>
+          )}
+          {activeTab === "usage" && (
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-x-4 items-center">
+                <div className="flex gap-x-2 w-40">
+                  <Input
+                    label="Cost"
+                    type="number"
+                    value={formData.cost} 
+                    onChange={(e) => handleInputChange("cost", e.target.value)}
+                    className="text-center"
+                    min={-2}
+                    step={1}
+                  />
+                  <Input
+                    label="Cost+"
+                    type="number"
+                    value={formData.upgradedCost} 
+                    onChange={(e) => handleInputChange("upgradedCost", e.target.value)}
+                    className="text-center"
+                    min={-2}
+                    step={1}
+                  />
+                </div>
+                <Dropdown 
+                  label="Target"
+                  value={formData.target} 
+                  onChange={(e) => handleInputChange("target", e)}
+                  options={VANILLA_TARGETS}
+                />
+              </div>
+            </div>
+          )}
 
             <footer className="flex gap-4">
               <Button

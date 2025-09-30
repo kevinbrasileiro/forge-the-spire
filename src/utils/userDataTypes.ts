@@ -9,19 +9,40 @@ export interface ModMeta {
   modID: string
 }
 export interface CardData {
+  // INFO
   id: string
   title: string
-  art?: string
-  description: string
-  
   color: string
-  cost: number
   type: "attack" | "skill" | "power" | "status" | "curse"
   rarity: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
-
+  description: string
+  art?: string
+  
+  //USAGE
+  cost: number | string
+  upgradedCost?: number | string
   target: "self" | "enemy" | "all enemies" | "everyone"
+  CardProperties: Record<PropertyKeyword, CardProperty>
+  variables: Partial<{
+    damage: [number, number],
+    block: [number, number],
+    magic: [number, number],
+  }>
+  customVariables?: CustomVariable[]
+  actions?: CardAction[]
+}
 
-  // ...
+type PropertyKeyword = "exhaust" | "ethereal" | "innate" | "retain"
+type CardProperty = "no" | "removed" | "obtained" | "both"
+
+type CustomVariable = {
+  name: string
+  value: [number, number] // Base value, upgrade modifier
+}
+
+type CardAction = {
+  name: string
+  variable: number
 }
 
 export interface CharacterData {

@@ -11,9 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextArea
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 }
 
-export const Input = forwardRef<
-HTMLInputElement | HTMLTextAreaElement, InputProps
->(
+export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
   (
     {
       label,
