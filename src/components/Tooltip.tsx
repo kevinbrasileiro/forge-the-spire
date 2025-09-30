@@ -93,7 +93,7 @@ const Tooltip: React.FC<TooltipProps> = ({
     <>
       <div
         ref={childRef}
-        className={`relative inline-block ${className}`}
+        className={`relative ${className}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

@@ -199,24 +199,28 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
             <div className="flex flex-col gap-4">
               <div className="flex gap-x-4 items-center">
                 <div className="flex gap-x-2 w-40">
-                  <Input
-                    label="Cost"
-                    type="number"
-                    value={formData.cost} 
-                    onChange={(e) => handleInputChange("cost", e.target.value)}
-                    className="text-center"
-                    min={-2}
-                    step={1}
-                  />
-                  <Input
-                    label="Cost+"
-                    type="number"
-                    value={formData.upgradedCost} 
-                    onChange={(e) => handleInputChange("upgradedCost", e.target.value)}
-                    className="text-center"
-                    min={-2}
-                    step={1}
-                  />
+                  <div>
+                    <Input
+                      label="Cost"
+                      type="number"
+                      value={formData.cost} 
+                      onChange={(e) => handleInputChange("cost", e.target.value)}
+                      className="text-center"
+                      min={-2}
+                      step={1}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      label="Cost+"
+                      type="number"
+                      value={formData.upgradedCost} 
+                      onChange={(e) => handleInputChange("upgradedCost", e.target.value)}
+                      className="text-center"
+                      min={-2}
+                      step={1}
+                    />
+                  </div>
                 </div>
                 <Dropdown 
                   label="Target"

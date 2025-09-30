@@ -19,15 +19,15 @@ export interface CardData {
   art?: string
   
   //USAGE
-  cost: number | string
-  upgradedCost?: number | string
-  target: "self" | "enemy" | "all enemies" | "everyone"
+  cost: number
+  upgradedCost?: number
+  target: "self" | "enemy" | "all" | "everyone"
   CardProperties: Record<PropertyKeyword, CardProperty>
-  variables: Partial<{
+  variables: {
     damage: [number, number],
     block: [number, number],
     magic: [number, number],
-  }>
+  }
   customVariables?: CustomVariable[]
   actions?: CardAction[]
 }

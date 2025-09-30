@@ -12,6 +12,12 @@ const tabs = [
 	{ route: "/powers", label: "Buffs/Debuffs", icon: BoltIcon },
 ];
 
+const modActions = [
+	{ function: () => console.log("Import") , label: "Import Mod", icon: ArrowDownTrayIcon},
+	{ function: () => console.log("Save") , label: "Save Mod", icon: BookmarkIcon},
+	{ function: () => console.log("Export") , label: "Export Mod", icon: CloudArrowUpIcon},
+]
+
 export default function Sidebar({
 	appVersion = "0.0.0"
 }) {
@@ -19,7 +25,7 @@ export default function Sidebar({
 	<nav className="w-20 h-screen rounded-lg flex flex-col p-4 justify-between overflow-hidden">
 		<div className="flex flex-col space-y-2">
 			{tabs.map((tab, index) => {
-				const Icon = tab.icon;
+				const Icon = tab.icon
 
 				return (
 					<NavLink to={tab.route} key={index}>
@@ -36,35 +42,24 @@ export default function Sidebar({
 							</Tooltip>
 						)}
 					</NavLink>
-				);
+				)
 			})}
 		</div>
 		<div className="flex flex-col space-y-2">
+			{modActions.map((action) => {
+				const Icon = action.icon
 
-			<button
-			onClick={() => console.log("import")}
-			>
-				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Import Mod">
-					<ArrowDownTrayIcon className="w-5 h-5"/>
-				</div>
-			</button>
-
-			<button
-			onClick={() => console.log("save")}
-			>
-				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Save Mod">
-					<BookmarkIcon className="w-5 h-5"/>
-				</div>
-			</button>
-
-			<button
-			onClick={() => console.log("export")}
-			>
-				<div className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150" title="Export Mod">
-					<CloudArrowUpIcon className="w-5 h-5"/>
-				</div>
-			</button>
-
+				return (
+					<Tooltip content={action.label} position="right">
+						<button 
+							className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150"
+							onClick={action.function}	
+						>
+							<Icon className="w-5 h-5"/>
+						</button>
+					</Tooltip>
+				)
+			})}
 			<a href="https://github.com/kevinbrasileiro/forge-the-spire" target="_blank" className="text-xs text-center mb-2 hover:underline">v{appVersion}</a>
 		</div>
 	</nav>
