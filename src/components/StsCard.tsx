@@ -58,7 +58,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
       )}
 
       {shouldOrbAppear && (
-        <p className="absolute top-7.25 w-14 text-center text-3xl text-black-light font-bold z-50">
+        <p className="absolute top-7.25 w-14 text-center text-3xl text-white font-bold z-50" style={{WebkitTextStroke: "1.25px black"}}>
           {card.cost >= 0 ? card.cost : "X"}
         </p>
       )}
