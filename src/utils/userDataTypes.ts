@@ -22,7 +22,7 @@ export interface CardData {
   cost: number
   upgradedCost?: number
   target: "self" | "enemy" | "all" | "everyone"
-  CardProperties: Record<PropertyKeyword, CardProperty>
+  cardProperties: Record<PropertyKeyword, CardProperty>
   variables: {
     damage: [number, number],
     block: [number, number],
@@ -32,8 +32,8 @@ export interface CardData {
   actions?: CardAction[]
 }
 
-type PropertyKeyword = "exhaust" | "ethereal" | "innate" | "retain"
-type CardProperty = "no" | "removed" | "obtained" | "both"
+export type PropertyKeyword = "exhaust" | "ethereal" | "innate" | "retain"
+type CardProperty = "no" | "removed" | "obtained" | "yes"
 
 type CustomVariable = {
   name: string

@@ -1,4 +1,4 @@
-import type { CardData } from "../utils/userDataTypes";
+import type { CardData, PropertyKeyword } from "../utils/userDataTypes";
 import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
@@ -45,6 +45,16 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
     setFormData({
       ...formData,
       [field]: value
+    })
+  }
+
+  const handleCardPropertyChange = (property: PropertyKeyword, value: string) => {
+    setFormData({
+      ...formData,
+      cardProperties: {
+        ...formData.cardProperties,
+        [property]: value
+      }
     })
   }
 
@@ -227,6 +237,52 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   value={formData.target} 
                   onChange={(e) => handleInputChange("target", e)}
                   options={VANILLA_TARGETS}
+                />
+              </div>
+              <div className="flex gap-x-2">
+                <Dropdown 
+                  label="Ethereal?"
+                  value={formData.cardProperties?.ethereal}
+                  onChange={(e) => handleCardPropertyChange("ethereal", e)}
+                  options={[
+                    {label: "No", value: "no"},
+                    {label: "Removed on Upgrade", value: "removed"},
+                    {label: "Obtained on Upgrade", value: "obtained"},
+                    {label: "Yes", value: "yes"},
+                  ]}
+                />
+                <Dropdown 
+                  label="Exhaust?"
+                  value={formData.cardProperties?.exhaust}
+                  onChange={(e) => handleCardPropertyChange("exhaust", e)}
+                  options={[
+                    {label: "No", value: "no"},
+                    {label: "Removed on Upgrade", value: "removed"},
+                    {label: "Obtained on Upgrade", value: "obtained"},
+                    {label: "Yes", value: "yes"},
+                  ]}
+                />
+                <Dropdown 
+                  label="Innate?"
+                  value={formData.cardProperties?.innate}
+                  onChange={(e) => handleCardPropertyChange("innate", e)}
+                                    options={[
+                    {label: "No", value: "no"},
+                    {label: "Removed on Upgrade", value: "removed"},
+                    {label: "Obtained on Upgrade", value: "obtained"},
+                    {label: "Yes", value: "yes"},
+                  ]}
+                />
+                <Dropdown 
+                  label="Retain?"
+                  value={formData.cardProperties?.retain}
+                  onChange={(e) => handleCardPropertyChange("retain", e)}
+                                    options={[
+                    {label: "No", value: "no"},
+                    {label: "Removed on Upgrade", value: "removed"},
+                    {label: "Obtained on Upgrade", value: "obtained"},
+                    {label: "Yes", value: "yes"},
+                  ]}
                 />
               </div>
             </div>
