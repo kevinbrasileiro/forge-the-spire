@@ -12,6 +12,7 @@
   --color-goldwhite: #fdf5e6;
   
   --color-danger: #d93d3d;
+  --color-upgraded: #7cfc00;
 }
 
 @layer utilities {

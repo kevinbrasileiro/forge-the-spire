@@ -13,16 +13,26 @@ export default function CardsPage() {
   const handleNewCard = () => {
     const newCard: CardData = {
       id: crypto.randomUUID(),
-      title: 'Strike',
+      title: "Strike",
+      color: "red",
+      type: "attack",
+      rarity: "common",
+      description: "Deal !D! damage.",
+      upgradedDescription: "Deal !D! damage.",
       art: "",
-      description: `Deal 6 damage.`,
 
-      color: 'red',
       cost: 1,
-      type: 'attack',
-      rarity: 'common',
-
+      upgradedCost: 1,
       target: 'enemy',
+      cardProperties: {
+        ethereal: "no",
+        exhaust: "no",
+        innate: "no",
+        retain: "no",
+      },
+      variables: {
+        damage: [6, 9],
+      }
     }
 
     setUserData((prev) => ({

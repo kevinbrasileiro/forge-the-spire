@@ -16,6 +16,7 @@ export interface CardData {
   type: "attack" | "skill" | "power" | "status" | "curse"
   rarity: "basic" | "common" | "uncommon" | "rare" | "special" | "curse"
   description: string
+  upgradedDescription?: string
   art?: string
   
   //USAGE
@@ -23,11 +24,11 @@ export interface CardData {
   upgradedCost?: number
   target: "self" | "enemy" | "all" | "everyone"
   cardProperties: Record<PropertyKeyword, CardProperty>
-  variables: {
+  variables: Partial<{
     damage: [number, number],
     block: [number, number],
     magic: [number, number],
-  }
+  }>
   customVariables?: CustomVariable[]
   actions?: CardAction[]
 }
@@ -42,7 +43,7 @@ type CustomVariable = {
 
 type CardAction = {
   name: string
-  variable: number
+  variable: string
 }
 
 export interface CharacterData {

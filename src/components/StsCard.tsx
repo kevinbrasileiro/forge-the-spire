@@ -3,10 +3,11 @@ import type { CardData } from "../utils/userDataTypes";
 
 interface StsCardProps {
   card: CardData
+  viewUpgraded?: boolean
   onClick?: () => void
 }
 
-export default function StsCard({card, onClick}: StsCardProps) {
+export default function StsCard({card, onClick, viewUpgraded = false}: StsCardProps) {
   const raritySrc = getRarityByValue(card.rarity)?.src
 
   const backgroundSrc = `assets/backgrounds/bg_${card.type}_${card.color}.png`
@@ -15,6 +16,18 @@ export default function StsCard({card, onClick}: StsCardProps) {
 
   const energySrc = `assets/energy/card_${card.color}_orb.png`
   const shouldOrbAppear = card.type !== "curse" && card.type !== "status" && card.cost != -2
+
+  const formatDescription = (description: string) => {
+    return description
+    .replaceAll(" NL ", "\n")
+    .replaceAll("!D!", String(card.variables.damage?.[0] ?? 0))
+    .replaceAll("!B!", String(card.variables.block?.[0] ?? 0))
+    .replaceAll("!M!", String(card.variables.magic?.[0] ?? 0))
+  }
+
+  const formatCost = (cost: number) => {
+    return cost >= 0 ? cost : "X"
+  }
 
   return (
     <div className="relative w-[250px] h-[375px]" onClick={onClick}>
@@ -58,8 +71,8 @@ export default function StsCard({card, onClick}: StsCardProps) {
       )}
 
       {shouldOrbAppear && (
-        <p className="absolute top-6.5 w-13.75 text-center text-[28px] text-white font-bold z-50 text-shadow-cost">
-          {card.cost >= 0 ? card.cost : "X"}
+        <p className={`absolute top-6.5 w-13.75 text-center text-[28px] font-bold z-50 text-shadow-cost ${viewUpgraded ? "text-upgraded" : "text-white"}`}>
+          {viewUpgraded ? formatCost(card.upgradedCost ?? card.cost) : formatCost(card.cost)}
         </p>
       )}
 
@@ -67,15 +80,15 @@ export default function StsCard({card, onClick}: StsCardProps) {
         {getTypeByValue(card.type)?.label}
       </p>
 
-      <p className="absolute top-11 w-full text-center text-lg text-white z-50 text-shadow-title tracking-wider">
-        {card.title}
+      <p className={`absolute top-11 w-full text-center text-lg z-50 text-shadow-title tracking-wider ${viewUpgraded ? "text-upgraded" : "text-white"}`}>
+        {card.title + (viewUpgraded ? "+" : "")}
       </p>
 
       <p 
         className="absolute w-full px-10 text-center font-light text-base/tight text-goldwhite z-50 text-shadow-[2px_1px_0px_#2F3026]"
-        style={{whiteSpace: 'pre', bottom: `${7 - 0.65 * card.description.split(/\n/).length}rem` }}
+        style={{whiteSpace: 'pre', bottom: `${7 - 0.65 * card.description.split("NL").length}rem` }}
       >
-        {card.description}
+        {viewUpgraded ? formatDescription(card.upgradedDescription ?? card.description) : formatDescription(card.description)}
       </p>
     </div>
   )

@@ -1,11 +1,11 @@
 import type { CardData, PropertyKeyword } from "../utils/userDataTypes";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
-import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
+import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 
 interface EditStsCardProps {
@@ -18,6 +18,7 @@ interface EditStsCardProps {
 
 export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: EditStsCardProps) {
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
+  const [viewUpgraded, setViewUpgraded] = useState(false)
   const [formData, setFormData] = useState<CardData>(card)
   const modalRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -46,6 +47,12 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
       ...formData,
       [field]: value
     })
+
+    if (field === "upgradedDescription" || field === "upgradedCost") {
+      setViewUpgraded(true)
+    } else {
+      setViewUpgraded(false)
+    }
   }
 
   const handleCardPropertyChange = (property: PropertyKeyword, value: string) => {
@@ -56,6 +63,16 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
         [property]: value
       }
     })
+  }
+
+  const handleKeyDown = (field: string, e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      const textArea = e.target as HTMLTextAreaElement
+      const newValue = textArea.value.trim() + " NL "
+
+      handleInputChange(field, newValue)
+    }
   }
 
   const handleImageUpload = (file?: File) => {
@@ -164,44 +181,59 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   height="140px"
                   value={formData.description} 
                   onChange={(e) => handleInputChange("description", e.target.value)}
-                />     
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e.target.files?.[0])}
-                  className="hidden"
-                  ref={fileInputRef}
+                  onKeyDown={(e) => handleKeyDown("description", e)}
                 />
-                <div className="flex flex-col w-full">
-                  <div className="mx-auto flex gap-x-1 items-center">
-                    <p>Card Art</p>
-                    <Tooltip content="The game renders card images as-is, so if they aren't cropped they'll stick out of frame">
-                      <QuestionMarkCircleIcon className="w-4 h-4"/>
-                    </Tooltip>
-                  </div>
-                  <div
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      e.preventDefault()
-                      handleImageUpload(e.dataTransfer.files?.[0])
-                    }}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="h-full mb-2 border-2 border-dashed border-black-light rounded-lg flex items-center justify-center gap-x-1 text-gold/40 cursor-pointer hover:bg-black-light transition-colors"
-                  >
-                    <PhotoIcon className="w-4 h-4"/> 
-                    {formData.art ? "Change Card Art" : "Upload Card Art"}
-                  </div>
-                  {formData.art && (
-                    <Button
-                      onClick={() => setFormData({...formData, art: ""})}
-                      variant="danger"
-                      className="w-full mb-2"
-                      size="sm"
-                    >
-                      Remove Card Art
-                    </Button>
-                  )}
+                <div className="flex my-auto">
+                  <Button 
+                    icon={<ChevronDoubleRightIcon className="w-4 h-4"/>}
+                    onClick={() => handleInputChange("upgradedDescription", formData.description)}
+                  />
                 </div>
+                <Input
+                  label="Description+"
+                  multiline
+                  height="140px"
+                  value={formData.upgradedDescription} 
+                  onChange={(e) => handleInputChange("upgradedDescription", e.target.value)}
+                  onKeyDown={(e) => handleKeyDown("upgradedDescription", e)}
+                />
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e.target.files?.[0])}
+                className="hidden"
+                ref={fileInputRef}
+              />
+              <div className="flex flex-col w-full">
+                <div className="mx-auto flex gap-x-1 items-center">
+                  <p>Card Art</p>
+                  <Tooltip content="The game renders card images as-is, so if they aren't cropped they'll stick out of frame">
+                    <QuestionMarkCircleIcon className="w-4 h-4"/>
+                  </Tooltip>
+                </div>
+                <div
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    handleImageUpload(e.dataTransfer.files?.[0])
+                  }}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="h-36 mb-2 border-2 border-dashed border-black-light rounded-lg flex items-center justify-center gap-x-1 text-gold/40 cursor-pointer hover:bg-black-light transition-colors"
+                >
+                  <PhotoIcon className="w-4 h-4"/> 
+                  {formData.art ? "Change Card Art" : "Upload Card Art"}
+                </div>
+                {formData.art && (
+                  <Button
+                    onClick={() => setFormData({...formData, art: ""})}
+                    variant="danger"
+                    className="w-full"
+                    size="sm"
+                  >
+                    Remove Card Art
+                  </Button>
+                )}
               </div>
             </div>
           )}
@@ -308,7 +340,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
         </div>
 
         <div className="flex-shrink-0 pl-24 my-auto">
-          <StsCard card={formData}/>
+          <StsCard card={formData} viewUpgraded={viewUpgraded}/>
         </div>
 
       </div>
