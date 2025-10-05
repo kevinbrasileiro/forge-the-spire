@@ -9,8 +9,31 @@
   --color-primary: #d9663d;
   --color-secondary: #f29d52;
   --color-gold: #fef3c6;
+  --color-goldwhite: #fdf5e6;
   
   --color-danger: #d93d3d;
+}
+
+@layer utilities {
+    .text-shadow-title {
+    text-shadow: 
+      2px 0 #59564F, -2px 0 #59564F, 0 2px #59564F, 0 -2px #59564F, 
+      1px 1px #59564F, -1px -1px #59564F, 1px -1px #59564F, 
+      -1px 1px #59564F, 2px 2px dimgray, 3px 2px dimgray, 
+      4px 2px dimgray, 2px 1px dimgray, 2px 3px dimgray;
+  }
+  
+  .text-shadow-cost {
+    text-shadow:
+      3px 0px #4C4943,
+      -3px 0px #4C4943,
+      0px 3px #4C4943,
+      0px -3px #4C4943,
+      2px 2px #4C4943,
+      -2px 2px #4C4943,
+      2px -2px #4C4943,
+      -2px -2px #4C4943;
+  }
 }
 
 html,

@@ -28,7 +28,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
         <img 
           src={card.art} 
           alt="Card Art"
-          className="absolute top-17.5 left-8 w-46 h-33 z-15" 
+          className="absolute top-17.5 left-8 w-46 h-34 z-15" 
           style={{
             maskImage: `url(/assets/portrait-masks/${card.type}-mask.png)`,
             maskRepeat: "no-repeat",
@@ -58,7 +58,7 @@ export default function StsCard({card, onClick}: StsCardProps) {
       )}
 
       {shouldOrbAppear && (
-        <p className="absolute top-7.25 w-14 text-center text-3xl text-white font-bold z-50" style={{WebkitTextStroke: "1.25px black"}}>
+        <p className="absolute top-6.5 w-13.75 text-center text-[28px] text-white font-bold z-50 text-shadow-cost">
           {card.cost >= 0 ? card.cost : "X"}
         </p>
       )}
@@ -67,13 +67,13 @@ export default function StsCard({card, onClick}: StsCardProps) {
         {getTypeByValue(card.type)?.label}
       </p>
 
-      <p className="absolute top-11 w-full text-center text-lg text-white z-50 text-shadow-[2px_2px_0px_#000]">
+      <p className="absolute top-11 w-full text-center text-lg text-white z-50 text-shadow-title tracking-wider">
         {card.title}
       </p>
 
       <p 
-        className="absolute w-full px-10 text-center text-base/tight text-white z-50"
-        style={{whiteSpace: 'pre', bottom: `${7 - 0.7 * card.description.split(/\n/).length}rem` }}
+        className="absolute w-full px-10 text-center font-light text-base/tight text-goldwhite z-50 text-shadow-[2px_1px_0px_#2F3026]"
+        style={{whiteSpace: 'pre', bottom: `${7 - 0.65 * card.description.split(/\n/).length}rem` }}
       >
         {card.description}
       </p>
