@@ -109,7 +109,7 @@ const Tooltip: React.FC<TooltipProps> = ({
             fixed px-3 py-2 bg-black-dark border border-black-light
             rounded-lg text-sm whitespace-nowrap z-[9999] shadow-lg
             pointer-events-auto transition-opacity duration-150 transform
-            ${show ? "opacity-100" : "opacity-0"}
+            ${show ? "opacity-100" : "opacity-0 h-0"}
             ${contentClassName}
           `}
           style={{

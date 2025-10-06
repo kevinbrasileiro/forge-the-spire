@@ -1,4 +1,4 @@
-import type { CardData, PropertyKeyword } from "../utils/userDataTypes";
+import type { CardData, CardVariable, PropertyKeyword } from "../utils/userDataTypes";
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
@@ -42,17 +42,23 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
     };
   }, [isOpen, onClose, onSave, formData]);
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleTextInputChange = (field: string, value: string, isUpgradeField = false) => {
+    setViewUpgraded(isUpgradeField)
+
     setFormData({
       ...formData,
       [field]: value
     })
+  }
 
-    if (field === "upgradedDescription" || field === "upgradedCost") {
-      setViewUpgraded(true)
-    } else {
-      setViewUpgraded(false)
-    }
+  const handleNumberInputChange = (field: string, value: string | number, isUpgradeField = false) => {
+    setViewUpgraded(isUpgradeField)
+    const parsedValue = typeof value === "string" ? parseFloat(value) : value
+
+    setFormData({
+      ...formData,
+      [field]: parsedValue
+    })
   }
 
   const handleCardPropertyChange = (property: PropertyKeyword, value: string) => {
@@ -65,13 +71,43 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
     })
   }
 
+  const handleVanillaVariableChange = (variableName: "damage" | "block" | "magic", value: Partial<CardVariable>, isUpgradeField = false) => {
+    setViewUpgraded(isUpgradeField)
+
+    setFormData({
+      ...formData,
+      vanillaVariables: {
+        ...formData.vanillaVariables,
+        [variableName]: {
+          ...formData.vanillaVariables?.[variableName],
+          ...value
+        }
+      }
+    })
+  }
+
+  // const handleCustomVariableChange = (variableName: string, value: Partial<CardVariable>, isUpgradeField = false) => {
+  //   setViewUpgraded(isUpgradeField)
+
+  //   setFormData({
+  //     ...formData,
+  //     customVariables: {
+  //       ...formData.customVariables,
+  //       [variableName]: {
+  //         ...formData.customVariables?.[variableName] ,
+  //         ...value
+  //       } 
+  //     } as Record<string, CardVariable>
+  //   })
+  // }
+
   const handleKeyDown = (field: string, e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault()
       const textArea = e.target as HTMLTextAreaElement
       const newValue = textArea.value.trim() + " NL "
 
-      handleInputChange(field, newValue)
+      handleTextInputChange(field, newValue)
     }
   }
 
@@ -151,26 +187,26 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                 <Input
                   label="Name"
                   value={formData.title} 
-                  onChange={(e) => handleInputChange("title", e.target.value)}
+                  onChange={(e) => handleTextInputChange("title", e.target.value)}
                 />
               </div>
               <div className="flex gap-x-4">
                 <Dropdown 
                   label="Color"
                   value={formData.color} 
-                  onChange={(e) => handleInputChange("color", e)}
+                  onChange={(e) => handleTextInputChange("color", e)}
                   options={colorsDropdownOptions}
                 />
                 <Dropdown 
                   label="Type"
                   value={formData.type} 
-                  onChange={(e) => handleInputChange("type", e)}
+                  onChange={(e) => handleTextInputChange("type", e)}
                   options={typesDropdownOptions}
                 />
                 <Dropdown 
                   label="Rarity"
                   value={formData.rarity} 
-                  onChange={(e) => handleInputChange("rarity", e)}
+                  onChange={(e) => handleTextInputChange("rarity", e)}
                   options={raritiesDropdownOptions}
                 />
               </div>
@@ -180,13 +216,13 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   multiline
                   height="140px"
                   value={formData.description} 
-                  onChange={(e) => handleInputChange("description", e.target.value)}
+                  onChange={(e) => handleTextInputChange("description", e.target.value)}
                   onKeyDown={(e) => handleKeyDown("description", e)}
                 />
                 <div className="flex my-auto">
                   <Button 
                     icon={<ChevronDoubleRightIcon className="w-4 h-4"/>}
-                    onClick={() => handleInputChange("upgradedDescription", formData.description)}
+                    onClick={() => handleTextInputChange("upgradedDescription", formData.description)}
                   />
                 </div>
                 <Input
@@ -194,7 +230,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   multiline
                   height="140px"
                   value={formData.upgradedDescription} 
-                  onChange={(e) => handleInputChange("upgradedDescription", e.target.value)}
+                  onChange={(e) => handleTextInputChange("upgradedDescription", e.target.value, true)}
                   onKeyDown={(e) => handleKeyDown("upgradedDescription", e)}
                 />
               </div>
@@ -246,7 +282,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                       label="Cost"
                       type="number"
                       value={formData.cost} 
-                      onChange={(e) => handleInputChange("cost", e.target.value)}
+                      onChange={(e) => handleNumberInputChange("cost", e.target.value)}
                       className="text-center"
                       min={-2}
                       step={1}
@@ -257,7 +293,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                       label="Cost+"
                       type="number"
                       value={formData.upgradedCost} 
-                      onChange={(e) => handleInputChange("upgradedCost", e.target.value)}
+                      onChange={(e) => handleNumberInputChange("upgradedCost", e.target.value, true)}
                       className="text-center"
                       min={-2}
                       step={1}
@@ -267,7 +303,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                 <Dropdown 
                   label="Target"
                   value={formData.target} 
-                  onChange={(e) => handleInputChange("target", e)}
+                  onChange={(e) => handleTextInputChange("target", e)}
                   options={VANILLA_TARGETS}
                 />
               </div>
@@ -298,7 +334,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   label="Innate?"
                   value={formData.cardProperties?.innate}
                   onChange={(e) => handleCardPropertyChange("innate", e)}
-                                    options={[
+                  options={[
                     {label: "No", value: "no"},
                     {label: "Removed on Upgrade", value: "removed"},
                     {label: "Obtained on Upgrade", value: "obtained"},
@@ -309,13 +345,47 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   label="Retain?"
                   value={formData.cardProperties?.retain}
                   onChange={(e) => handleCardPropertyChange("retain", e)}
-                                    options={[
+                  options={[
                     {label: "No", value: "no"},
                     {label: "Removed on Upgrade", value: "removed"},
                     {label: "Obtained on Upgrade", value: "obtained"},
                     {label: "Yes", value: "yes"},
                   ]}
                 />
+              </div>
+
+              <div className="flex justify-between">
+                  <div className="flex flex-col w-1/2 items-center">
+                    <p>Variables</p>
+                    <div className="w-full bg-black-light rounded-lg p-3">
+                      <div className="flex items-center justify-between">
+                        <p>Damage:</p>
+                        <div className="w-14">
+                          <Input 
+                            type="number"
+                            value={formData.vanillaVariables?.damage?.baseValue}
+                            onChange={(e) => handleVanillaVariableChange("damage", { baseValue: parseFloat(e.target.value) || 0 })}
+                            min={0}
+                            className="h-8 text-center"
+                          />
+                        </div>
+                        <p>Upgrade:</p>
+                        <div className="w-14">
+                          <Input 
+                            type="number" 
+                            value={formData.vanillaVariables?.damage?.upgradedValue}
+                            onChange={(e) => handleVanillaVariableChange("damage", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
+                            min={0}
+                            className="h-8 text-center"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col w-full items-center">
+                    Actions
+                  </div>
               </div>
             </div>
           )}

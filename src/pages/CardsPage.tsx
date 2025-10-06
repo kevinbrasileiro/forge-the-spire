@@ -30,8 +30,10 @@ export default function CardsPage() {
         innate: "no",
         retain: "no",
       },
-      variables: {
-        damage: [6, 9],
+      vanillaVariables: {
+        damage: {baseValue: 6, upgradedValue: 9},
+        block: {baseValue: 0, upgradedValue: 0},
+        magic: {baseValue: 0, upgradedValue: 0},
       }
     }
 

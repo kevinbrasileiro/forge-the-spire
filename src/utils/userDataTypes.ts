@@ -24,22 +24,22 @@ export interface CardData {
   upgradedCost?: number
   target: "self" | "enemy" | "all" | "everyone"
   cardProperties: Record<PropertyKeyword, CardProperty>
-  variables: Partial<{
-    damage: [number, number],
-    block: [number, number],
-    magic: [number, number],
-  }>
-  customVariables?: CustomVariable[]
+  vanillaVariables: {
+    damage: CardVariable,
+    block: CardVariable,
+    magic: CardVariable
+  }
+  customVariables?: Record<string, CardVariable>
   actions?: CardAction[]
 }
 
 export type PropertyKeyword = "exhaust" | "ethereal" | "innate" | "retain"
 type CardProperty = "no" | "removed" | "obtained" | "yes"
 
-type CustomVariable = {
-  name: string
-  value: [number, number] // Base value, upgrade modifier
-}
+export type CardVariable = {
+  baseValue: number
+  upgradedValue: number
+};
 
 type CardAction = {
   name: string

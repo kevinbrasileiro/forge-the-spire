@@ -18,11 +18,15 @@ export default function StsCard({card, onClick, viewUpgraded = false}: StsCardPr
   const shouldOrbAppear = card.type !== "curse" && card.type !== "status" && card.cost != -2
 
   const formatDescription = (description: string) => {
+    const damageValue = viewUpgraded ? card.vanillaVariables?.damage?.upgradedValue : card.vanillaVariables?.damage?.baseValue
+    const blockValue = viewUpgraded ? card.vanillaVariables?.block?.upgradedValue : card.vanillaVariables?.block?.baseValue
+    const magicValue = viewUpgraded ? card.vanillaVariables?.magic?.upgradedValue : card.vanillaVariables?.magic?.baseValue
+    
     return description
     .replaceAll(" NL ", "\n")
-    .replaceAll("!D!", String(card.variables.damage?.[0] ?? 0))
-    .replaceAll("!B!", String(card.variables.block?.[0] ?? 0))
-    .replaceAll("!M!", String(card.variables.magic?.[0] ?? 0))
+    .replaceAll("!D!", String(damageValue || 0))
+    .replaceAll("!B!", String(blockValue || 0))
+    .replaceAll("!M!", String(magicValue || 0))
   }
 
   const formatCost = (cost: number) => {

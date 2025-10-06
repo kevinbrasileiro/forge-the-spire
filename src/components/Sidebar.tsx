@@ -1,6 +1,13 @@
 import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router";
 import Tooltip from "./Tooltip";
+import { useContext } from "react";
+import { UserDataContext } from "../UserDataContext";
+
+export default function Sidebar({
+	appVersion = "0.0.0"
+}) {
+	const { userData } = useContext(UserDataContext)
 
 const tabs = [
 	{ route: "/config", label: "Config", icon: Cog6ToothIcon },
@@ -15,12 +22,9 @@ const tabs = [
 const modActions = [
 	{ function: () => console.log("Import") , label: "Import Mod", icon: ArrowDownTrayIcon},
 	{ function: () => console.log("Save") , label: "Save Mod", icon: BookmarkIcon},
-	{ function: () => console.log("Export") , label: "Export Mod", icon: CloudArrowUpIcon},
+	{ function: () => console.log(userData.cards) , label: "Export Mod", icon: CloudArrowUpIcon},
 ]
 
-export default function Sidebar({
-	appVersion = "0.0.0"
-}) {
   return (
 	<nav className="w-20 h-screen rounded-lg flex flex-col p-4 justify-between overflow-hidden">
 		<div className="flex flex-col space-y-2">
@@ -50,7 +54,7 @@ export default function Sidebar({
 				const Icon = action.icon
 
 				return (
-					<Tooltip content={action.label} position="right">
+					<Tooltip content={action.label} position="right" key={action.label}>
 						<button 
 							className="w-full flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors duration-150"
 							onClick={action.function}	
