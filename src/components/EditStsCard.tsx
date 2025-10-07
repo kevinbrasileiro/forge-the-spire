@@ -1,10 +1,10 @@
 import type { CardData, CardVariable, PropertyKeyword } from "../utils/userDataTypes";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
-import { colorsDropdownOptions, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
+import { colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 
@@ -47,7 +47,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
     setFormData({
       ...formData,
-      [field]: value
+      [field]: value || ""
     })
   }
 
@@ -57,7 +57,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
     setFormData({
       ...formData,
-      [field]: parsedValue
+      [field]: parsedValue || 0
     })
   }
 
@@ -100,16 +100,6 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   //     } as Record<string, CardVariable>
   //   })
   // }
-
-  const handleKeyDown = (field: string, e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      const textArea = e.target as HTMLTextAreaElement
-      const newValue = textArea.value.trim() + " NL "
-
-      handleTextInputChange(field, newValue)
-    }
-  }
 
   const handleImageUpload = (file?: File) => {
     if (file) {
@@ -217,9 +207,8 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   height="140px"
                   value={formData.description} 
                   onChange={(e) => handleTextInputChange("description", e.target.value)}
-                  onKeyDown={(e) => handleKeyDown("description", e)}
                 />
-                <div className="flex my-auto">
+                <div className="flex flex-col items-center gap-y-2 my-auto">
                   <Button 
                     icon={<ChevronDoubleRightIcon className="w-4 h-4"/>}
                     onClick={() => handleTextInputChange("upgradedDescription", formData.description)}
@@ -231,7 +220,6 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   height="140px"
                   value={formData.upgradedDescription} 
                   onChange={(e) => handleTextInputChange("upgradedDescription", e.target.value, true)}
-                  onKeyDown={(e) => handleKeyDown("upgradedDescription", e)}
                 />
               </div>
               <input
@@ -312,72 +300,108 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   label="Ethereal?"
                   value={formData.cardProperties?.ethereal}
                   onChange={(e) => handleCardPropertyChange("ethereal", e)}
-                  options={[
-                    {label: "No", value: "no"},
-                    {label: "Removed on Upgrade", value: "removed"},
-                    {label: "Obtained on Upgrade", value: "obtained"},
-                    {label: "Yes", value: "yes"},
-                  ]}
+                  options={PROPERTY_OPTIONS}
                 />
                 <Dropdown 
                   label="Exhaust?"
                   value={formData.cardProperties?.exhaust}
                   onChange={(e) => handleCardPropertyChange("exhaust", e)}
-                  options={[
-                    {label: "No", value: "no"},
-                    {label: "Removed on Upgrade", value: "removed"},
-                    {label: "Obtained on Upgrade", value: "obtained"},
-                    {label: "Yes", value: "yes"},
-                  ]}
+                  options={PROPERTY_OPTIONS}
                 />
                 <Dropdown 
                   label="Innate?"
                   value={formData.cardProperties?.innate}
                   onChange={(e) => handleCardPropertyChange("innate", e)}
-                  options={[
-                    {label: "No", value: "no"},
-                    {label: "Removed on Upgrade", value: "removed"},
-                    {label: "Obtained on Upgrade", value: "obtained"},
-                    {label: "Yes", value: "yes"},
-                  ]}
+                  options={PROPERTY_OPTIONS}
                 />
                 <Dropdown 
                   label="Retain?"
                   value={formData.cardProperties?.retain}
                   onChange={(e) => handleCardPropertyChange("retain", e)}
-                  options={[
-                    {label: "No", value: "no"},
-                    {label: "Removed on Upgrade", value: "removed"},
-                    {label: "Obtained on Upgrade", value: "obtained"},
-                    {label: "Yes", value: "yes"},
-                  ]}
+                  options={PROPERTY_OPTIONS}
                 />
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex">
                   <div className="flex flex-col w-1/2 items-center">
                     <p>Variables</p>
-                    <div className="w-full bg-black-light rounded-lg p-3">
-                      <div className="flex items-center justify-between">
-                        <p>Damage:</p>
-                        <div className="w-14">
-                          <Input 
-                            type="number"
-                            value={formData.vanillaVariables?.damage?.baseValue}
-                            onChange={(e) => handleVanillaVariableChange("damage", { baseValue: parseFloat(e.target.value) || 0 })}
-                            min={0}
-                            className="h-8 text-center"
-                          />
+                    <div className="w-full flex flex-col justify-center gap-y-2">
+                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
+                        <div className="w-full flex justify-between items-center">
+                          <p>Damage:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.damage?.baseValue}
+                              onChange={(e) => handleVanillaVariableChange("damage", { baseValue: parseFloat(e.target.value) || 0 })}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
                         </div>
-                        <p>Upgrade:</p>
-                        <div className="w-14">
-                          <Input 
-                            type="number" 
-                            value={formData.vanillaVariables?.damage?.upgradedValue}
-                            onChange={(e) => handleVanillaVariableChange("damage", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
-                            min={0}
-                            className="h-8 text-center"
-                          />
+                        <div className="w-full flex justify-between items-center">
+                          <p>Upgrade:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.damage?.upgradedValue}
+                              onChange={(e) => handleVanillaVariableChange("damage", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
+                        <div className="w-full flex justify-between items-center">
+                          <p>Block:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.block?.baseValue}
+                              onChange={(e) => handleVanillaVariableChange("block", { baseValue: parseFloat(e.target.value) || 0 })}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-full flex justify-between items-center">
+                          <p>Upgrade:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.block?.upgradedValue}
+                              onChange={(e) => handleVanillaVariableChange("block", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
+                        <div className="w-full flex justify-between items-center">
+                          <p>Magic:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.magic?.baseValue}
+                              onChange={(e) => handleVanillaVariableChange("magic", { baseValue: parseFloat(e.target.value) || 0 })}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-full flex justify-between items-center">
+                          <p>Upgrade:</p>
+                          <div className="w-14">
+                            <Input 
+                              type="number"
+                              value={formData.vanillaVariables?.magic?.upgradedValue}
+                              onChange={(e) => handleVanillaVariableChange("magic", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
+                              min={0}
+                              className="h-8 text-center"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

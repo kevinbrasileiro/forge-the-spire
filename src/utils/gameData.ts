@@ -49,3 +49,10 @@ export const VANILLA_TARGETS = [
   {label: "Self", value: "self"},
   {label: "Everyone", value: "everyone"},
 ]
+
+export const PROPERTY_OPTIONS = [
+  {label: "No", value: "no"},
+  {label: "Removed on Upgrade", value: "removed"},
+  {label: "Obtained on Upgrade", value: "obtained"},
+  {label: "Yes", value: "yes"},
+]

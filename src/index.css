@@ -43,5 +43,15 @@ body {
   margin: 0;
   color: var(--color-gold);
   background-color: var(--color-black-dark);
-  font-family: var(--font-game);;
+  font-family: var(--font-game);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--color-black-dark);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-black-light);
 }

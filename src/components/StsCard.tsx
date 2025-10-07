@@ -23,7 +23,6 @@ export default function StsCard({card, onClick, viewUpgraded = false}: StsCardPr
     const magicValue = viewUpgraded ? card.vanillaVariables?.magic?.upgradedValue : card.vanillaVariables?.magic?.baseValue
     
     return description
-    .replaceAll(" NL ", "\n")
     .replaceAll("!D!", String(damageValue || 0))
     .replaceAll("!B!", String(blockValue || 0))
     .replaceAll("!M!", String(magicValue || 0))
@@ -90,7 +89,7 @@ export default function StsCard({card, onClick, viewUpgraded = false}: StsCardPr
 
       <p 
         className="absolute w-full px-10 text-center font-light text-base/tight text-goldwhite z-50 text-shadow-[2px_1px_0px_#2F3026]"
-        style={{whiteSpace: 'pre', bottom: `${7 - 0.65 * card.description.split("NL").length}rem` }}
+        style={{whiteSpace: 'pre', bottom: `${7 - 0.65 * card.description.split(/\n/).length}rem` }}
       >
         {viewUpgraded ? formatDescription(card.upgradedDescription ?? card.description) : formatDescription(card.description)}
       </p>
