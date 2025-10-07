@@ -4,10 +4,11 @@ import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
-import { colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
+import { ACTIONS, colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 import VanillaVariable from "./VanillaVariable";
+import Search from "./Search";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -23,6 +24,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   const [formData, setFormData] = useState<CardData>(card)
   const modalRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [actionSearch, setActionSearch] = useState("")
 
   useEffect(() => {
     if (!isOpen) return;
@@ -323,10 +325,10 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                 />
               </div>
 
-              <div className="flex">
+              <div className="flex gap-x-4">
                   <div className="flex flex-col w-1/2 items-center">
                     <p>Variables</p>
-                    <div className="w-full flex flex-col justify-center gap-y-2">
+                    <div className="flex flex-col w-full justify-center gap-y-2">
                       <VanillaVariable
                         value={formData.vanillaVariables.damage}
                         variableName="damage"
@@ -346,7 +348,19 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   </div>
 
                   <div className="flex flex-col w-full items-center">
-                    Actions
+                    <p>Actions</p>
+                    <Search 
+                      onChange={(e) => setActionSearch(e.target.value)}
+                      value={actionSearch}
+                      placeholder="Search for an action"
+                      options={ACTIONS.filter((action) => {
+                        return action.label.toLowerCase().includes(actionSearch.toLowerCase())
+                      })}
+                      onClickOption={(value) => console.log(value)}
+                    />
+                    <div className="flex flex-col w-full justify-center gap-y-2">
+                      {/* <CardAction/> */}
+                    </div>
                   </div>
               </div>
             </div>

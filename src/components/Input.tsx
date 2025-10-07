@@ -1,8 +1,9 @@
-import { forwardRef, type InputHTMLAttributes, type KeyboardEvent } from "react"
+import { forwardRef, type InputHTMLAttributes, type KeyboardEvent, type ReactNode } from "react"
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   label?: string 
   error?: string
+  icon?: ReactNode
   className?: string
   multiline?: boolean
   height?: string
@@ -16,6 +17,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
     {
       label,
       error,
+      icon,
       className = "",
       multiline = false,
       height = "auto",
@@ -26,15 +28,14 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
     },
     ref
   ) => {
-    const inputClasses = `border-black-light hover:border-primary bg-black-dark px-3 py-2 font-light text-base focus:outline-none rounded-lg border-2 focus:border-primary transition-colors w-full
+    const inputClasses = `border-black-light hover:border-primary bg-black-dark ${icon ? "px-8" : "px-3"} py-2 font-light text-base focus:outline-none rounded-lg border-2 focus:border-primary transition-colors w-full
     ${error ? "border-danger" : ""}
     ${
       props.type === "number"
         ? "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         : ""
     }
-    ${className}
-  `;
+    ${className}`
 
     return (
       <div className="w-full">
@@ -49,6 +50,11 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
       )}
 
         <div className="relative">
+          {icon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+              {icon}
+            </div>
+          )}
           {multiline ? (
             <textarea
               ref={ref as React.Ref<HTMLTextAreaElement>}

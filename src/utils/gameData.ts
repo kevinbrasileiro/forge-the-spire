@@ -56,3 +56,16 @@ export const PROPERTY_OPTIONS = [
   {label: "Obtained on Upgrade", value: "obtained"},
   {label: "Yes", value: "yes"},
 ]
+
+export const ACTIONS = [
+  {label: "Deal Damage", value: "damage"},
+  {label: "Block", value: "block"},
+  {label: "Heal", value: "heal"},
+  {label: "Apply Buff/Debuff", value: "apply"},
+  {label: "Draw Cards", value: "draw"},
+  {label: "Discard Cards", value: "discard"},
+  {label: "Exahust Cards", value: "exhaust"},
+  {label: "Gain Energy", value: "energy"},
+  {label: "Lose HP", value: "losehp"},
+  {label: "End Turn", value: "endturn"},
+]

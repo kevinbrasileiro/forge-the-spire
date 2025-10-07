@@ -43,7 +43,7 @@ export type CardVariable = {
 
 type CardAction = {
   name: string
-  variable: string
+  variable: string | number
 }
 
 export interface CharacterData {
