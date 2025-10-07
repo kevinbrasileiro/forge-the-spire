@@ -45,7 +45,7 @@ export default function Search({placeholder, value, onChange, options, onClickOp
         ref={searchRef}
       />
       {isOpen && (
-        <div className="bg-black-dark border-2 border-black-light rounded-lg shadow-lg max-h-66 overflow-y-auto z-100 mt-1" ref={optionRef}>
+        <div className="absolute left-0 right-0 top-full bg-black-dark border-2 border-black-light rounded-lg shadow-lg max-h-64 overflow-y-auto z-100 mt-1" ref={optionRef}>
           {options.map((option) => (
             <div 
               key={option.label}

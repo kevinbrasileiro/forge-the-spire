@@ -10,6 +10,7 @@ import Tooltip from "./Tooltip";
 import VanillaVariable from "./VanillaVariable";
 import Search from "./Search";
 import Action from "./Action";
+import EditAction from "./EditAction";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -21,11 +22,12 @@ interface EditStsCardProps {
 
 export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: EditStsCardProps) {
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
-  const [viewUpgraded, setViewUpgraded] = useState(false)
   const [formData, setFormData] = useState<CardData>(card)
+  const [viewUpgraded, setViewUpgraded] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [actionSearch, setActionSearch] = useState("")
+  const [editingAction, setEditingAction] = useState<CardAction | null>(null)
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,6 +49,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   }, [isOpen, onClose, onSave, formData]);
 
   const handleTextInputChange = (field: string, value: string, isUpgradeField = false) => {
+    setEditingAction(null)
     setViewUpgraded(isUpgradeField)
 
     setFormData({
@@ -57,6 +60,8 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
   const handleNumberInputChange = (field: string, value: string | number, isUpgradeField = false) => {
     setViewUpgraded(isUpgradeField)
+    setEditingAction(null)
+
     const parsedValue = typeof value === "string" ? parseFloat(value) : value
 
     setFormData({
@@ -66,6 +71,8 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   }
 
   const handleCardPropertyChange = (property: PropertyKeyword, value: string) => {
+    setEditingAction(null)
+
     setFormData({
       ...formData,
       cardProperties: {
@@ -77,6 +84,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
   const handleVanillaVariableChange = (variableName: "damage" | "block" | "magic", value: Partial<CardVariable>, isUpgradeField = false) => {
     setViewUpgraded(isUpgradeField)
+    setEditingAction(null)
 
     setFormData({
       ...formData,
@@ -127,6 +135,10 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   }
 
   const handleDeleteAction = (actionId: string) => {
+    const actionToDelete = formData.actions?.find((action) => action.id === actionId)
+    if (editingAction === actionToDelete) {
+      setEditingAction(null)
+    }
     setFormData({
       ...formData,
       actions: formData.actions?.filter((action) => action.id !== actionId)
@@ -199,7 +211,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   return (
     <div className="fixed inset-0 flex bg-black-light/80 backdrop-blur-sm items-center justify-center z-50">
       <div ref={modalRef} className="flex items-start gap-8 max-h-[90vh]">
-        <div className="bg-black-dark border-black-light rounded-lg w-[100vh] h-[90vh] flex flex-col relative overflow-auto">
+        <div className="bg-black-dark border-black-light rounded-lg w-[100vh] h-[90vh] flex flex-col relative">
           <div className="flex">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -223,7 +235,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
             })}
           </div>
 
-          <div className="flex flex-col h-full justify-between p-4">
+          <div className="flex flex-col h-full justify-between p-4 overflow-y-auto">
             {activeTab === "info" && (
             <div className="flex flex-col gap-4">
               <div className="flex gap-x-4">
@@ -315,7 +327,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
             </div>
           )}
           {activeTab === "usage" && (
-            <div className="flex flex-col overflow-y-auto gap-4">
+            <div className="flex flex-col gap-4">
               <div className="flex gap-x-4 items-center">
                 <div className="flex gap-x-2 w-40">
                   <div>
@@ -413,6 +425,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                         <Action 
                           key={action.id}
                           action={action}
+                          onEdit={(action) => setEditingAction(action)}
                           onDelete={handleDeleteAction}
                           onMove={handleMoveAction}
                         />
@@ -423,7 +436,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
             </div>
           )}
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4">
               <Button
                variant="danger" 
                onClick={() => {if (window.confirm(`Are you sure you want to delete ${formData.title}?`)) onDelete(card.id)} }
@@ -442,8 +455,12 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
           </div>
         </div>
 
-        <div className="flex-shrink-0 pl-24 my-auto">
-          <StsCard card={formData} viewUpgraded={viewUpgraded}/>
+        <div className="flex-shrink-0 my-auto">
+          {editingAction ? (
+            <EditAction action={editingAction}/>
+          ) : (
+            <StsCard card={formData} viewUpgraded={viewUpgraded}/>
+          )}
         </div>
 
       </div>
