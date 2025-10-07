@@ -41,9 +41,11 @@ export type CardVariable = {
   upgradedValue: number
 };
 
-type CardAction = {
+export type CardAction = {
+  id: string
   name: string
-  variable: string | number
+  label: string
+  variable?: string | number
 }
 
 export interface CharacterData {

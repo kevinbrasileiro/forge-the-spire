@@ -1,4 +1,4 @@
-import type { CardData, CardVariable, PropertyKeyword } from "../utils/userDataTypes";
+import type { CardAction, CardData, CardVariable, PropertyKeyword } from "../utils/userDataTypes";
 import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
@@ -9,6 +9,7 @@ import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, C
 import Tooltip from "./Tooltip";
 import VanillaVariable from "./VanillaVariable";
 import Search from "./Search";
+import Action from "./Action";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -104,6 +105,55 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   //   })
   // }
 
+  const handleAddAction = (actionName: string, label: string) => {
+    const newAction: CardAction = {
+      id: crypto.randomUUID(),
+      name: actionName,
+      label,
+      variable: 0
+    }
+
+    if (formData.actions) {
+      setFormData({
+        ...formData,
+        actions: [...formData.actions, newAction]
+      })
+    } else {
+      setFormData({
+        ...formData,
+        actions: [newAction]
+      })
+    }
+  }
+
+  const handleDeleteAction = (actionId: string) => {
+    setFormData({
+      ...formData,
+      actions: formData.actions?.filter((action) => action.id !== actionId)
+    })
+  }
+
+  const handleMoveAction = (actionId: string, direction: "up" | "down") => {
+    const index = formData.actions?.findIndex((action) => action.id === actionId)
+
+    if (index === undefined|| !formData.actions) {
+      return
+    }
+
+    const swappedActions = [...formData.actions]
+
+    if (direction === "up" && index > 0) {
+      [swappedActions[index], swappedActions[index - 1]] = [swappedActions[index - 1], swappedActions[index]]
+    } else if (direction === "down" && index < swappedActions.length - 1) {
+      [swappedActions[index], swappedActions[index + 1]] = [swappedActions[index + 1], swappedActions[index]]
+    }
+
+    setFormData({
+      ...formData,
+      actions: swappedActions,
+    });
+  }
+
   const handleImageUpload = (file?: File) => {
     if (file) {
       const reader = new FileReader()
@@ -149,7 +199,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   return (
     <div className="fixed inset-0 flex bg-black-light/80 backdrop-blur-sm items-center justify-center z-50">
       <div ref={modalRef} className="flex items-start gap-8 max-h-[90vh]">
-        <div className="bg-black-dark border-black-light rounded-lg w-[100vh] h-[90vh] flex flex-col relative overflow-hidden">
+        <div className="bg-black-dark border-black-light rounded-lg w-[100vh] h-[90vh] flex flex-col relative overflow-auto">
           <div className="flex">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -265,7 +315,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
             </div>
           )}
           {activeTab === "usage" && (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col overflow-y-auto gap-4">
               <div className="flex gap-x-4 items-center">
                 <div className="flex gap-x-2 w-40">
                   <div>
@@ -356,17 +406,24 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                       options={ACTIONS.filter((action) => {
                         return action.label.toLowerCase().includes(actionSearch.toLowerCase())
                       })}
-                      onClickOption={(value) => console.log(value)}
+                      onClickOption={(action, label) => handleAddAction(action, label)}
                     />
-                    <div className="flex flex-col w-full justify-center gap-y-2">
-                      {/* <CardAction/> */}
+                    <div className="flex flex-col w-full justify-center gap-y-2 mt-2">
+                      {formData.actions?.map((action) => (
+                        <Action 
+                          key={action.id}
+                          action={action}
+                          onDelete={handleDeleteAction}
+                          onMove={handleMoveAction}
+                        />
+                      ))}
                     </div>
                   </div>
               </div>
             </div>
           )}
 
-            <footer className="flex gap-4">
+            <div className="flex gap-4">
               <Button
                variant="danger" 
                onClick={() => {if (window.confirm(`Are you sure you want to delete ${formData.title}?`)) onDelete(card.id)} }
@@ -381,7 +438,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
               >
                 Save Changes
               </Button>
-            </footer>
+            </div>
           </div>
         </div>
 

@@ -83,7 +83,7 @@ export default function StsCard({card, onClick, viewUpgraded = false}: StsCardPr
         {getTypeByValue(card.type)?.label}
       </p>
 
-      <p className={`absolute top-11 w-full text-center text-lg z-50 text-shadow-title tracking-wider ${viewUpgraded ? "text-upgraded" : "text-white"}`}>
+      <p className={`absolute top-10.75 w-full text-center text-lg z-50 text-shadow-title tracking-wider ${viewUpgraded ? "text-upgraded" : "text-white"}`}>
         {card.title + (viewUpgraded ? "+" : "")}
       </p>
 

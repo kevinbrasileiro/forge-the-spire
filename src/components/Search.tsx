@@ -8,7 +8,7 @@ interface SearchProps {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   options: DropdownOption[]
-  onClickOption: (value: string) => void
+  onClickOption: (action: string, label: string) => void
 }
 
 export default function Search({placeholder, value, onChange, options, onClickOption}: SearchProps) {
@@ -52,7 +52,7 @@ export default function Search({placeholder, value, onChange, options, onClickOp
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
-                onClickOption(option.value)
+                onClickOption(option.value, option.label)
               }}
               className="px-3 py-2 cursor-pointer hover:bg-black-light"
             >
