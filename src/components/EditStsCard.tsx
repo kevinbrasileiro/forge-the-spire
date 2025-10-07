@@ -7,6 +7,7 @@ import Dropdown from "./Dropdown";
 import { colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
+import VanillaVariable from "./VanillaVariable";
 
 interface EditStsCardProps {
   isOpen: boolean
@@ -326,84 +327,21 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
                   <div className="flex flex-col w-1/2 items-center">
                     <p>Variables</p>
                     <div className="w-full flex flex-col justify-center gap-y-2">
-                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
-                        <div className="w-full flex justify-between items-center">
-                          <p>Damage:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.damage?.baseValue}
-                              onChange={(e) => handleVanillaVariableChange("damage", { baseValue: parseFloat(e.target.value) || 0 })}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                        <div className="w-full flex justify-between items-center">
-                          <p>Upgrade:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.damage?.upgradedValue}
-                              onChange={(e) => handleVanillaVariableChange("damage", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
-                        <div className="w-full flex justify-between items-center">
-                          <p>Block:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.block?.baseValue}
-                              onChange={(e) => handleVanillaVariableChange("block", { baseValue: parseFloat(e.target.value) || 0 })}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                        <div className="w-full flex justify-between items-center">
-                          <p>Upgrade:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.block?.upgradedValue}
-                              onChange={(e) => handleVanillaVariableChange("block", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
-                        <div className="w-full flex justify-between items-center">
-                          <p>Magic:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.magic?.baseValue}
-                              onChange={(e) => handleVanillaVariableChange("magic", { baseValue: parseFloat(e.target.value) || 0 })}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                        <div className="w-full flex justify-between items-center">
-                          <p>Upgrade:</p>
-                          <div className="w-14">
-                            <Input 
-                              type="number"
-                              value={formData.vanillaVariables?.magic?.upgradedValue}
-                              onChange={(e) => handleVanillaVariableChange("magic", { upgradedValue: parseFloat(e.target.value) || 0 }, true)}
-                              min={0}
-                              className="h-8 text-center"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      <VanillaVariable
+                        value={formData.vanillaVariables.damage}
+                        variableName="damage"
+                        onChange={handleVanillaVariableChange}
+                      />
+                      <VanillaVariable
+                        value={formData.vanillaVariables.block}
+                        variableName="block"
+                        onChange={handleVanillaVariableChange}
+                      />
+                      <VanillaVariable
+                        value={formData.vanillaVariables.magic}
+                        variableName="magic"
+                        onChange={handleVanillaVariableChange}
+                      />
                     </div>
                   </div>
 
