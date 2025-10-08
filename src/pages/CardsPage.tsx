@@ -87,9 +87,7 @@ export default function CardsPage() {
       </div>
       {editingCard && (
         <EditStsCard 
-          isOpen={!!editingCard}
           card={editingCard}
-          onClose={() => setEditingCard(null)}
           onSave={handleSaveCard}
           onDelete={handleDeleteCard}
         />

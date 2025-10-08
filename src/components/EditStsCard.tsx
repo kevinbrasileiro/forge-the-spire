@@ -1,5 +1,5 @@
 import type { CardAction, CardData, CardVariable, PropertyKeyword } from "../utils/userDataTypes";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
@@ -13,14 +13,12 @@ import Action from "./Action";
 import EditAction from "./EditAction";
 
 interface EditStsCardProps {
-  isOpen: boolean
   card: CardData
-  onClose: () => void
   onSave: (card: CardData) => void
   onDelete: (cardId: string) => void
 }
 
-export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: EditStsCardProps) {
+export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) {
   const [activeTab, setActiveTab] = useState<"info" | "usage">("info");
   const [formData, setFormData] = useState<CardData>(card)
   const [viewUpgraded, setViewUpgraded] = useState(false)
@@ -28,25 +26,6 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [actionSearch, setActionSearch] = useState("")
   const [editingAction, setEditingAction] = useState<CardAction | null>(null)
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onSave(formData)
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, onClose, onSave, formData]);
 
   const handleTextInputChange = (field: string, value: string, isUpgradeField = false) => {
     setEditingAction(null)
@@ -148,7 +127,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
   const handleMoveAction = (actionId: string, direction: "up" | "down") => {
     const index = formData.actions?.findIndex((action) => action.id === actionId)
 
-    if (index === undefined|| !formData.actions) {
+    if (index === undefined || !formData.actions) {
       return
     }
 
@@ -457,7 +436,7 @@ export default function EditStsCard({isOpen, card, onClose, onSave, onDelete}: E
 
         <div className="flex-shrink-0 my-auto">
           {editingAction ? (
-            <EditAction action={editingAction}/>
+            <EditAction action={editingAction} />
           ) : (
             <StsCard card={formData} viewUpgraded={viewUpgraded}/>
           )}

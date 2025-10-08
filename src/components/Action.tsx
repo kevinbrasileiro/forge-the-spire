@@ -11,11 +11,11 @@ interface ActionProps {
 
 export default function Action({ action, onEdit, onDelete, onMove }: ActionProps) {
   return (
-    <div className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3">
-      <div 
-        className="w-full flex justify-between items-center"
-        onClick={() => onEdit(action)}
-      >
+    <div 
+      className="flex justify-between gap-x-4 bg-black-light rounded-lg p-3"
+      onClick={() => onEdit(action)}  
+    >
+      <div className="w-full flex justify-between items-center">
         <div className="flex items-center justify-between w-full">
           <p>{action.label}</p>
           <div className="flex gap-x-2">

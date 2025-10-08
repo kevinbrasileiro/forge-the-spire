@@ -46,6 +46,7 @@ export type CardAction = {
   name: string
   label: string
   variable?: string | number
+  random?: boolean
 }
 
 export interface CharacterData {

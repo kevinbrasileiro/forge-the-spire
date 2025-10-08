@@ -6,7 +6,7 @@ interface EditActionProps {
 
 export default function EditAction({ action }: EditActionProps) {
   return (
-    <div className="w-[500px] h-[90vh] bg-black-dark rounded-lg p-4">
+    <div className="w-[400px] h-[90vh] bg-black-dark rounded-lg p-4">
       {action.label} Action
     </div>
   )
