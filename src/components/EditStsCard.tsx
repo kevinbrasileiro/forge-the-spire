@@ -4,13 +4,14 @@ import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
-import { ACTIONS, colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
+import { colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 import VanillaVariable from "./VanillaVariable";
 import Search from "./Search";
 import Action from "./Action";
 import EditAction from "./EditAction";
+import { ACTIONS, getActionByName } from "../data/actions";
 
 interface EditStsCardProps {
   card: CardData
@@ -92,12 +93,12 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
   //   })
   // }
 
-  const handleAddAction = (actionName: string, label: string) => {
+  const handleAddAction = (name: string) => {
+    const template = getActionByName(name)
     const newAction: CardAction = {
+      ...template,
       id: crypto.randomUUID(),
-      name: actionName,
-      label,
-      variable: 0
+      params: {}
     }
 
     if (formData.actions) {
@@ -397,7 +398,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
                       options={ACTIONS.filter((action) => {
                         return action.label.toLowerCase().includes(actionSearch.toLowerCase())
                       })}
-                      onClickOption={(action, label) => handleAddAction(action, label)}
+                      onClickOption={(name) => handleAddAction(name)}
                     />
                     <div className="flex flex-col w-full justify-center gap-y-2 mt-2">
                       {formData.actions?.map((action) => (

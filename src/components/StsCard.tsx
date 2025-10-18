@@ -1,4 +1,4 @@
-import { getRarityByValue, getTypeByValue } from "../utils/gameData";
+import { getRarityByName, getTypeByName } from "../utils/gameData";
 import type { CardData } from "../utils/userDataTypes";
 
 interface StsCardProps {
@@ -8,7 +8,7 @@ interface StsCardProps {
 }
 
 export default function StsCard({card, onClick, viewUpgraded = false}: StsCardProps) {
-  const raritySrc = getRarityByValue(card.rarity)?.src
+  const raritySrc = getRarityByName(card.rarity)?.src
 
   const backgroundSrc = `assets/backgrounds/bg_${card.type}_${card.color}.png`
   const bannerSrc = `assets/banners/banner_${raritySrc}.png`
@@ -80,7 +80,7 @@ export default function StsCard({card, onClick, viewUpgraded = false}: StsCardPr
       )}
 
       <p className="absolute bottom-40.75 w-full text-center text-black-light text-xs z-50">
-        {getTypeByValue(card.type)?.label}
+        {getTypeByName(card.type)?.name}
       </p>
 
       <p className={`absolute top-11.5 w-full text-center text-[16px] z-50 text-shadow-title tracking-wider ${viewUpgraded ? "text-upgraded" : "text-white"}`}>

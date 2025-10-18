@@ -1,71 +1,58 @@
 export const VANILLA_COLORS = [
-  {label: "Red", id: "red", src: "red"},
-  {label: "Green", id: "green", src: "green"},
-  {label: "Blue", id: "blue", src: "blue"},
-  {label: "Purple", id: "purple", src: "purple"},
-  {label: "Colorless", id: "colorless", src: "gray"},
-  // {label: "Curse", id: "curse", src: "black"},
+  {label: "Red", name: "red", src: "red"},
+  {label: "Green", name: "green", src: "green"},
+  {label: "Blue", name: "blue", src: "blue"},
+  {label: "Purple", name: "purple", src: "purple"},
+  {label: "Colorless", name: "colorless", src: "gray"},
+  // {label: "Curse", name: "curse", src: "black"},
 ]
 
-export const colorsDropdownOptions = VANILLA_COLORS.map(color => ({ label: color.label, id: color.id }));
+export const colorsDropdownOptions = VANILLA_COLORS.map(color => ({ label: color.label, name: color.name }));
 
 
-export const getColorByValue = (id: string) => {
-  return VANILLA_COLORS.find(color => color.id === id)
+export const getColorByName = (name: string) => {
+  return VANILLA_COLORS.find(color => color.name === name)
 }
 
 export const VANILLA_TYPES = [
-  {label: "Attack", id: "attack", src: "attack"},
-  {label: "Skill", id: "skill", src: "skill"},
-  {label: "Power", id: "power", src: "power"},
-  // {label: "Curse", id: "curse", src: "curse"},
-  // {label: "Status", id: "status", src: "status"},
+  {label: "Attack", name: "attack", src: "attack"},
+  {label: "Skill", name: "skill", src: "skill"},
+  {label: "Power", name: "power", src: "power"},
+  // {label: "Curse", name: "curse", src: "curse"},
+  // {label: "Status", name: "status", src: "status"},
 ]
 
-export const getTypeByValue = (id: string) => {
-  return VANILLA_TYPES.find(type => type.id === id)
+export const getTypeByName = (name: string) => {
+  return VANILLA_TYPES.find(type => type.name === name)
 }
 
-export const typesDropdownOptions = VANILLA_TYPES.map(type => ({ label: type.label, id: type.id }));
+export const typesDropdownOptions = VANILLA_TYPES.map(type => ({ label: type.label, name: type.name }));
 
 export const VANILLA_RARITIES = [
-  {label: "Starter", id: "basic", src: "common"},
-  {label: "Common", id: "common", src: "common"},
-  {label: "Uncommon", id: "uncommon", src: "uncommon"},
-  {label: "Rare", id: "rare", src: "rare"},
-  // {label: "Special", id: "special", src: "special"},
-  // {label: "Curse", id: "curse", src: "curse"},
+  {label: "Starter", name: "basic", src: "common"},
+  {label: "Common", name: "common", src: "common"},
+  {label: "Uncommon", name: "uncommon", src: "uncommon"},
+  {label: "Rare", name: "rare", src: "rare"},
+  // {label: "Special", name: "special", src: "special"},
+  // {label: "Curse", name: "curse", src: "curse"},
 ]
 
-export const getRarityByValue = (id: string) => {
-  return VANILLA_RARITIES.find(rarity => rarity.id === id)
+export const getRarityByName = (name: string) => {
+  return VANILLA_RARITIES.find(rarity => rarity.name === name)
 }
 
-export const raritiesDropdownOptions = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, id: rarity.id}))
+export const raritiesDropdownOptions = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, name: rarity.name}))
 
 export const VANILLA_TARGETS = [
-  {label: "Enemy", id: "enemy"},
-  {label: "ALL Enemies", id: "all"},
-  {label: "Self", id: "self"},
-  {label: "Everyone", id: "everyone"},
+  {label: "Enemy", name: "enemy"},
+  {label: "ALL Enemies", name: "all"},
+  {label: "Self", name: "self"},
+  {label: "Everyone", name: "everyone"},
 ]
 
 export const PROPERTY_OPTIONS = [
-  {label: "No", id: "no"},
-  {label: "Removed on Upgrade", id: "removed"},
-  {label: "Obtained on Upgrade", id: "obtained"},
-  {label: "Yes", id: "yes"},
-]
-
-export const ACTIONS = [
-  {id: "damage",label: "Deal Damage"},
-  {id: "block", label: "Block"},
-  {id: "heal", label: "Heal"},
-  {id: "apply", label: "Apply Buff/Debuff"},
-  {id: "draw", label: "Draw Cards"},
-  {id: "discard", label: "Discard Cards"},
-  {id: "exhaust", label: "Exahust Cards"},
-  {id: "energy", label: "Gain Energy"},
-  {id: "losehp", label: "Lose HP"},
-  {id: "endturn", label: "End Turn"},
+  {label: "No", name: "no"},
+  {label: "Removed on Upgrade", name: "removed"},
+  {label: "Obtained on Upgrade", name: "obtained"},
+  {label: "Yes", name: "yes"},
 ]

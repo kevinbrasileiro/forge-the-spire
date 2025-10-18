@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { useEffect, useRef, useState } from "react"
 
 export interface DropdownOption {
-  id: string
+  name: string
   label: string
 }
 
@@ -77,7 +77,7 @@ export default function Dropdown({
     } 
   }, [isOpen])
 
-  const selectedOption = options.find((option) => option.id === value)
+  const selectedOption = options.find((option) => option.name === value)
   const displayText = selectedOption ? selectedOption.label : placeholder
 
   return (
@@ -145,18 +145,18 @@ export default function Dropdown({
             >
               {options.map((option) => (
                 <div
-                  key={option.id}
+                  key={option.name}
                   className={`px-3 py-2 cursor-pointer text-base}
                   ${
-                    value === option.id
+                    value === option.name
                       ? "bg-primary"
                       : "hover:bg-black-light"
                   }
-                  ${value === option.id ? "font-medium" : "font-light"}
+                  ${value === option.name ? "font-medium" : "font-light"}
                 `}
                   onClick={(e) => {
                     e.stopPropagation()
-                    onChange(option.id)
+                    onChange(option.name)
                     setIsOpen(false)
                   }}
                 >

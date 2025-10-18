@@ -45,8 +45,7 @@ export type CardAction = {
   id: string
   name: string
   label: string
-  variable?: string | number
-  random?: boolean
+  params?: Record<string, unknown>
 }
 
 export interface CharacterData {

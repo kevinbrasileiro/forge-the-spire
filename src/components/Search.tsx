@@ -8,7 +8,7 @@ interface SearchProps {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   options: DropdownOption[]
-  onClickOption: (action: string, label: string) => void
+  onClickOption: (name: string) => void
 }
 
 export default function Search({placeholder, value, onChange, options, onClickOption}: SearchProps) {
@@ -48,11 +48,11 @@ export default function Search({placeholder, value, onChange, options, onClickOp
         <div className="absolute left-0 right-0 top-full bg-black-dark border-2 border-black-light rounded-lg shadow-lg max-h-64 overflow-y-auto z-100 mt-1" ref={optionRef}>
           {options.map((option) => (
             <div 
-              key={option.label}
+              key={option.name}
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
-                onClickOption(option.value, option.label)
+                onClickOption(option.name)
               }}
               className="px-3 py-2 cursor-pointer hover:bg-black-light"
             >
