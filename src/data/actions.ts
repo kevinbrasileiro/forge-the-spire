@@ -7,8 +7,8 @@ export type ActionTemplate = {
     id: string
     type: string
     label: string
+    default: string
     options?: DropdownOption[]
-    default?: string
     showWhen?: {
       parameter: string
       values: string[]
@@ -47,11 +47,6 @@ export const ACTIONS: ActionTemplate[] = [
         type: "checkbox",
         label: "Random Target?",
         default: "false",
-      },
-      {
-        id: "times",
-        type: "number",
-        label: "Times to Trigger",
       },
     ]
   },

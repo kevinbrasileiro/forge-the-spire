@@ -32,10 +32,10 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
     setEditingAction(null)
     setViewUpgraded(isUpgradeField)
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [field]: value || ""
-    })
+    }))
   }
 
   const handleNumberInputChange = (field: string, value: string | number, isUpgradeField = false) => {
@@ -44,54 +44,39 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
 
     const parsedValue = typeof value === "string" ? parseFloat(value) : value
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [field]: parsedValue || 0
-    })
+    }))
   }
 
   const handleCardPropertyChange = (property: PropertyKeyword, value: string) => {
     setEditingAction(null)
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       cardProperties: {
-        ...formData.cardProperties,
+        ...prev.cardProperties,
         [property]: value
       }
-    })
+    }))
   }
 
   const handleVanillaVariableChange = (variableName: "damage" | "block" | "magic", value: Partial<CardVariable>, isUpgradeField = false) => {
     setViewUpgraded(isUpgradeField)
     setEditingAction(null)
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       vanillaVariables: {
-        ...formData.vanillaVariables,
+        ...prev.vanillaVariables,
         [variableName]: {
-          ...formData.vanillaVariables?.[variableName],
+          ...prev.vanillaVariables?.[variableName],
           ...value
         }
       }
-    })
+    }))
   }
-
-  // const handleCustomVariableChange = (variableName: string, value: Partial<CardVariable>, isUpgradeField = false) => {
-  //   setViewUpgraded(isUpgradeField)
-
-  //   setFormData({
-  //     ...formData,
-  //     customVariables: {
-  //       ...formData.customVariables,
-  //       [variableName]: {
-  //         ...formData.customVariables?.[variableName] ,
-  //         ...value
-  //       } 
-  //     } as Record<string, CardVariable>
-  //   })
-  // }
 
   const handleAddAction = (name: string) => {
     const template = getActionByName(name)
@@ -101,17 +86,10 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
       params: {}
     }
 
-    if (formData.actions) {
-      setFormData({
-        ...formData,
-        actions: [...formData.actions, newAction]
-      })
-    } else {
-      setFormData({
-        ...formData,
-        actions: [newAction]
-      })
-    }
+    setFormData(prev => ({
+      ...prev,
+      actions: [...prev.actions || [], newAction]
+    }))
   }
 
   const handleDeleteAction = (actionId: string) => {
@@ -119,10 +97,10 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
     if (editingAction === actionToDelete) {
       setEditingAction(null)
     }
-    setFormData({
-      ...formData,
-      actions: formData.actions?.filter((action) => action.id !== actionId)
-    })
+    setFormData(prev => ({
+      ...prev,
+      actions: prev.actions?.filter((action) => action.id !== actionId)
+    }))
   }
 
   const handleMoveAction = (actionId: string, direction: "up" | "down") => {
@@ -140,10 +118,24 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
       [swappedActions[index], swappedActions[index + 1]] = [swappedActions[index + 1], swappedActions[index]]
     }
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       actions: swappedActions,
-    });
+    }));
+  }
+
+  const handleChangeAction = (actionId: string, parameter: string, value: string) => {
+    console.log(actionId, parameter, value)
+    setFormData(prev => {
+      const updatedActions = prev.actions?.map((action) => {
+        return action.id === actionId
+        ? {...action, params: {...action.params, [parameter]: value} }
+        : action
+      })
+      const updatedAction = updatedActions?.find((action) => action.id === actionId)
+      setEditingAction(updatedAction || null)
+      return {...prev, actions: updatedActions}
+    })
   }
 
   const handleImageUpload = (file?: File) => {
@@ -154,10 +146,10 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
         img.onload = () => {
           const finalImgData = resizeImage(img, 250, 190)
 
-          setFormData({
-            ...formData,
+          setFormData(prev => ({
+            ...prev,
             art: finalImgData
-          })
+          }))
         }
         img.src = reader.result as string
       }
@@ -295,7 +287,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
                 </div>
                 {formData.art && (
                   <Button
-                    onClick={() => setFormData({...formData, art: ""})}
+                    onClick={() => setFormData(prev => ({...prev, art: ""}))}
                     variant="danger"
                     className="w-full"
                     size="sm"
@@ -435,13 +427,13 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
           </div>
         </div>
 
-        <div className="flex-shrink-0 my-auto">
+        <aside className="flex-shrink-0 my-auto">
           {editingAction ? (
-            <EditAction action={editingAction} />
+            <EditAction action={editingAction} onChange={handleChangeAction}/>
           ) : (
             <StsCard card={formData} viewUpgraded={viewUpgraded}/>
           )}
-        </div>
+        </aside>
 
       </div>
     </div>
