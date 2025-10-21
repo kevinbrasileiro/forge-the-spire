@@ -1,24 +1,22 @@
-import { getActionByName } from "../data/actions"
-import type { CardAction } from "../utils/userDataTypes"
+import { getActionTemplateByName } from "../data/actions"
+import type { CardAction, CardData } from "../utils/userDataTypes"
 import Dropdown from "./Dropdown"
 import { Input } from "./Input"
+import VariableInput from "./VariableInput"
 
 interface EditActionProps {
   action: CardAction
-  onChange: (actionId: string, parameter: string, value: string) => void
+  card: CardData
+  onChange: (actionId: string, parameter: string, value: string | number) => void
 }
 
 export default function EditAction({ action, onChange }: EditActionProps) { 
-  const actionTemplate = getActionByName(action.name)
-
-  const handleParameterChange = (parameter: string, value: string) => {
-    console.log(parameter, value)
-    onChange(action.id, parameter, value)
-  }
-
+  const actionTemplate = getActionTemplateByName(action.name)
   const params = action.params
 
-  console.log(params)
+  const handleParameterChange = (parameter: string, value: string | number) => {
+    onChange(action.id, parameter, value)
+  }
 
   return (
     <div className="w-[400px] h-[90vh] flex flex-col gap-4 bg-black-dark rounded-lg p-4">
@@ -26,35 +24,44 @@ export default function EditAction({ action, onChange }: EditActionProps) {
         {action.label} Action
       </div>
       <div className="flex flex-col gap-4">
-        {actionTemplate.params?.map((template) => {
+        {actionTemplate.params?.map((paramTemplate) => {
           return (
-            <div key={template.id}>
+            <div key={paramTemplate.name}>
               {(() => {
-                switch (template.type) {
+                switch (paramTemplate.type) {
                   case "text":
                     return (
                       <Input
-                        label={template.label} 
-                        value={params?.[template.id] as string}
-                        onChange={(e) => handleParameterChange(template.id, e.target.value)}
+                        label={paramTemplate.label} 
+                        value={params?.[paramTemplate.name]}
+                        onChange={(e) => handleParameterChange(paramTemplate.name, e.target.value)}
                       />
                     )
                   case "number":
                     return (
                       <Input
-                        label={template.label}
-                        value={params?.[template.id] as string}
-                        onChange={(e) => handleParameterChange(template.id, e.target.value)}
+                        label={paramTemplate.label}
+                        value={params?.[paramTemplate.name]}
+                        onChange={(e) => handleParameterChange(paramTemplate.name, e.target.value)}
                         className="text-center"
                       />
                     )
                   case "dropdown":
                     return (
                       <Dropdown 
-                        label={template.label}
-                        value={params?.[template.id] as string}
-                        onChange={(e) => handleParameterChange(template.id, e)}
-                        options={template.options ?? []}
+                        label={paramTemplate.label}
+                        value={params?.[paramTemplate.name] as string}
+                        onChange={(e) => handleParameterChange(paramTemplate.name, e)}
+                        options={paramTemplate.options ?? []}
+                      />
+                    )
+                  case "variable": 
+                    return (
+                      <VariableInput 
+                        paramTemplate={paramTemplate}
+                        params={params}
+                        value={params?.[paramTemplate.name]}
+                        onChange={handleParameterChange}
                       />
                     )
                 }

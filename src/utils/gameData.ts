@@ -45,6 +45,7 @@ export const raritiesDropdownOptions = VANILLA_RARITIES.map(rarity => ({ label: 
 
 export const VANILLA_TARGETS = [
   {label: "Enemy", name: "enemy"},
+  {label: "Random Enemy", name: "random"},
   {label: "ALL Enemies", name: "all"},
   {label: "Self", name: "self"},
   {label: "Everyone", name: "everyone"},

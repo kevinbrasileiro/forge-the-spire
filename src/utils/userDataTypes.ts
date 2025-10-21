@@ -22,7 +22,7 @@ export interface CardData {
   //USAGE
   cost: number
   upgradedCost?: number
-  target: "self" | "enemy" | "all" | "everyone"
+  target: "self" | "enemy" | "random" | "all" | "everyone"
   cardProperties: Record<PropertyKeyword, CardProperty>
   vanillaVariables: {
     damage: CardVariable,
@@ -45,7 +45,7 @@ export type CardAction = {
   id: string
   name: string
   label: string
-  params?: Record<string, string | number | boolean>
+  params: Record<string, string | number>
 }
 
 export interface CharacterData {

@@ -11,7 +11,7 @@ import VanillaVariable from "./VanillaVariable";
 import Search from "./Search";
 import Action from "./Action";
 import EditAction from "./EditAction";
-import { ACTIONS, getActionByName } from "../data/actions";
+import { ACTIONS_TEMPLATES, getActionTemplateByName } from "../data/actions";
 
 interface EditStsCardProps {
   card: CardData
@@ -79,11 +79,13 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
   }
 
   const handleAddAction = (name: string) => {
-    const template = getActionByName(name)
+    const template = getActionTemplateByName(name)
     const newAction: CardAction = {
       ...template,
       id: crypto.randomUUID(),
-      params: {}
+      params: {
+        "amount-type": "variable",
+      }
     }
 
     setFormData(prev => ({
@@ -124,8 +126,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
     }));
   }
 
-  const handleChangeAction = (actionId: string, parameter: string, value: string) => {
-    console.log(actionId, parameter, value)
+  const handleChangeAction = (actionId: string, parameter: string, value: string | number) => {
     setFormData(prev => {
       const updatedActions = prev.actions?.map((action) => {
         return action.id === actionId
@@ -387,7 +388,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
                       onChange={(e) => setActionSearch(e.target.value)}
                       value={actionSearch}
                       placeholder="Search for an action"
-                      options={ACTIONS.filter((action) => {
+                      options={ACTIONS_TEMPLATES.filter((action) => {
                         return action.label.toLowerCase().includes(actionSearch.toLowerCase())
                       })}
                       onClickOption={(name) => handleAddAction(name)}
@@ -429,7 +430,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
 
         <aside className="flex-shrink-0 my-auto">
           {editingAction ? (
-            <EditAction action={editingAction} onChange={handleChangeAction}/>
+            <EditAction action={editingAction} card={formData} onChange={handleChangeAction}/>
           ) : (
             <StsCard card={formData} viewUpgraded={viewUpgraded}/>
           )}

@@ -3,11 +3,11 @@ import type { DropdownOption } from "../components/Dropdown"
 export type ActionTemplate = {
   name: string
   label: string
-  params?: Array<{
-    id: string
+  params: Array<{
+    name: string
     type: string
     label: string
-    default: string
+    default?: string
     options?: DropdownOption[]
     showWhen?: {
       parameter: string
@@ -16,53 +16,51 @@ export type ActionTemplate = {
   }>
 }
 
-export const ACTIONS: ActionTemplate[] = [
+export const ACTIONS_TEMPLATES: ActionTemplate[] = [
   {
     name: "damage",
     label: "Deal Damage",
     params: [
       {
-        id: "variable-type",
-        type: "dropdown",
-        label: "Variable Type",
-        options: [
-          {name: "variable", label: "Variable"},
-          {name: "fixed", label: "Fixed"},
-          {name: "cost", label: "Cost"},
-        ],
-        default: "variable",
-      },
-      {
-        id: "variable",
-        type: "text",
-        label: "Variable Name",
-        default: "variable",
-        showWhen: {
-          parameter: "variable-type",
-          values: ["variable"],
-        }
-      },
-      {
-        id: "random",
-        type: "checkbox",
-        label: "Random Target?",
-        default: "false",
+        name: "amount",
+        type: "variable",
+        label: "Amount",
       },
     ]
   },
-  {name: "block", label: "Gain Block"},
-  {name: "heal", label: "Heal"},
-  {name: "apply", label: "Apply Buff/Debuff"},
-  {name: "draw", label: "Draw Cards"},
-  {name: "discard", label: "Discard Cards"},
-  {name: "exhaust", label: "Exahust Cards"},
-  {name: "energy", label: "Gain Energy"},
-  {name: "losehp", label: "Lose HP"},
-  {name: "endturn", label: "End Turn"},
+  {
+    name: "block",
+    label: "Gain Block",
+    params: [
+      {
+        name: "amount",
+        type: "variable",
+        label: "Amount",
+      },
+    ]
+  },
+  // {name: "heal", label: "Heal"},
+  // {name: "apply", label: "Apply Buff/Debuff"},
+  {
+    name: "draw",
+    label: "Draw Cards",
+    params: [
+      {
+        name: "amount",
+        type: "variable",
+        label: "Amount",
+      },
+    ]
+  },
+  // {name: "discard", label: "Discard Cards"},
+  // {name: "exhaust", label: "Exahust Cards"},
+  // {name: "energy", label: "Gain Energy"},
+  // {name: "losehp", label: "Lose HP"},
+  // {name: "endturn", label: "End Turn"},
 ]
 
-export const getActionByName = (name: string): ActionTemplate => {
-  return ACTIONS.find(action => action.name === name) ?? ACTIONS[0]
+export const getActionTemplateByName = (name: string): ActionTemplate => {
+  return ACTIONS_TEMPLATES.find(action => action.name === name) ?? ACTIONS_TEMPLATES[0]
 }
 
-export const ACTIONS_DROPDOWN: DropdownOption[] = ACTIONS.map(action => ({name: action.name, label: action.label}))
+export const ACTIONS_DROPDOWN: DropdownOption[] = ACTIONS_TEMPLATES.map(action => ({name: action.name, label: action.label}))

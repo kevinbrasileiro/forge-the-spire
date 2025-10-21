@@ -17,7 +17,10 @@ export default function Action({ action, onEdit, onDelete, onMove }: ActionProps
     >
       <div className="w-full flex justify-between items-center">
         <div className="flex items-center justify-between w-full">
-          <p>{action.label}</p>
+          <p>
+            {action.label}
+            <span className="text-xs text-gold/80">{` (${Object.values(action.params ?? {}).join(", ").toLowerCase()})`}</span>
+          </p>
           <div className="flex gap-x-2">
             <Button 
               variant="secondary" 
