@@ -1,4 +1,5 @@
 import type { DropdownOption } from "../components/Dropdown"
+import { VANILLA_POWERS } from "./card"
 
 export type ActionTemplate = {
   name: string
@@ -39,8 +40,24 @@ export const ACTIONS_TEMPLATES: ActionTemplate[] = [
       },
     ]
   },
+  {
+    name: "apply",
+    label: "Apply Buff/Debuff",
+    params: [
+      {
+        name: "power",
+        type: "dropdown",
+        label: "Buff/Debuff",
+        options: VANILLA_POWERS
+      },
+      {
+        name: "amount",
+        type: "variable",
+        label: "Amount",
+      },
+    ]
+  },
   // {name: "heal", label: "Heal"},
-  // {name: "apply", label: "Apply Buff/Debuff"},
   {
     name: "draw",
     label: "Draw Cards",

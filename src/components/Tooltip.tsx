@@ -103,18 +103,17 @@ const Tooltip: React.FC<TooltipProps> = ({
       {createPortal(
         <div
           ref={tooltipRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
           className={`
             fixed px-3 py-2 bg-black-dark border border-black-light
             rounded-lg text-sm whitespace-nowrap z-[9999] shadow-lg
             pointer-events-auto transition-opacity duration-150 transform
-            ${show ? "opacity-100" : "opacity-0 h-0"}
+            ${show ? "opacity-100" : "opacity-0"}
             ${contentClassName}
           `}
           style={{
             top: `${tooltipPosition.top}px`,
             left: `${tooltipPosition.left}px`,
+            visibility: show ? "visible" : "hidden",
           }}
         >
           {content}

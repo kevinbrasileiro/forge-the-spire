@@ -1,4 +1,4 @@
-import { getRarityByName, getTypeByName } from "../utils/gameData";
+import { getRarityByName, getTypeByName } from "../data/card";
 import type { CardData } from "../utils/userDataTypes";
 
 interface StsCardProps {

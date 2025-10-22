@@ -4,7 +4,7 @@ import Button from "./Button";
 import StsCard from "./StsCard";
 import { Input } from "./Input";
 import Dropdown from "./Dropdown";
-import { colorsDropdownOptions, PROPERTY_OPTIONS, raritiesDropdownOptions, typesDropdownOptions, VANILLA_TARGETS} from "../utils/gameData";
+import { COLORS_DROPDOWN, PROPERTY_OPTIONS, RARITIES_DROPDOWN, TYPES_DROPDOWN, VANILLA_TARGETS} from "../data/card";
 import { DocumentTextIcon, PuzzlePieceIcon, PhotoIcon, QuestionMarkCircleIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import Tooltip from "./Tooltip";
 import VanillaVariable from "./VanillaVariable";
@@ -223,19 +223,19 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
                   label="Color"
                   value={formData.color} 
                   onChange={(e) => handleTextInputChange("color", e)}
-                  options={colorsDropdownOptions}
+                  options={COLORS_DROPDOWN}
                 />
                 <Dropdown 
                   label="Type"
                   value={formData.type} 
                   onChange={(e) => handleTextInputChange("type", e)}
-                  options={typesDropdownOptions}
+                  options={TYPES_DROPDOWN}
                 />
                 <Dropdown 
                   label="Rarity"
                   value={formData.rarity} 
                   onChange={(e) => handleTextInputChange("rarity", e)}
-                  options={raritiesDropdownOptions}
+                  options={RARITIES_DROPDOWN}
                 />
               </div>
               <div className="flex gap-x-4">
@@ -248,6 +248,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
                 />
                 <div className="flex flex-col items-center gap-y-2 my-auto">
                   <Button 
+                    variant="secondary"
                     icon={<ChevronDoubleRightIcon className="w-4 h-4"/>}
                     onClick={() => handleTextInputChange("upgradedDescription", formData.description)}
                   />

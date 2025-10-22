@@ -7,8 +7,7 @@ export const VANILLA_COLORS = [
   // {label: "Curse", name: "curse", src: "black"},
 ]
 
-export const colorsDropdownOptions = VANILLA_COLORS.map(color => ({ label: color.label, name: color.name }));
-
+export const COLORS_DROPDOWN = VANILLA_COLORS.map(color => ({ label: color.label, name: color.name }));
 
 export const getColorByName = (name: string) => {
   return VANILLA_COLORS.find(color => color.name === name)
@@ -26,7 +25,7 @@ export const getTypeByName = (name: string) => {
   return VANILLA_TYPES.find(type => type.name === name)
 }
 
-export const typesDropdownOptions = VANILLA_TYPES.map(type => ({ label: type.label, name: type.name }));
+export const TYPES_DROPDOWN = VANILLA_TYPES.map(type => ({ label: type.label, name: type.name }));
 
 export const VANILLA_RARITIES = [
   {label: "Starter", name: "basic", src: "common"},
@@ -41,7 +40,7 @@ export const getRarityByName = (name: string) => {
   return VANILLA_RARITIES.find(rarity => rarity.name === name)
 }
 
-export const raritiesDropdownOptions = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, name: rarity.name}))
+export const RARITIES_DROPDOWN = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, name: rarity.name}))
 
 export const VANILLA_TARGETS = [
   {label: "Enemy", name: "enemy"},
@@ -56,4 +55,10 @@ export const PROPERTY_OPTIONS = [
   {label: "Removed on Upgrade", name: "removed"},
   {label: "Obtained on Upgrade", name: "obtained"},
   {label: "Yes", name: "yes"},
+]
+
+export const VANILLA_POWERS = [
+  {label: "Weak", name: "weak"},
+  {label: "Vulnerable", name: "vulnerable"},
+  // ...
 ]
