@@ -1,3 +1,5 @@
+import type { DropdownOption } from "../components/generic/Dropdown";
+
 export const VANILLA_COLORS = [
   {label: "Red", name: "red", src: "red"},
   {label: "Green", name: "green", src: "green"},
@@ -7,7 +9,7 @@ export const VANILLA_COLORS = [
   // {label: "Curse", name: "curse", src: "black"},
 ]
 
-export const COLORS_DROPDOWN = VANILLA_COLORS.map(color => ({ label: color.label, name: color.name }));
+export const COLORS_DROPDOWN: DropdownOption[] = VANILLA_COLORS.map(color => ({ label: color.label, name: color.name }));
 
 export const getColorByName = (name: string) => {
   return VANILLA_COLORS.find(color => color.name === name)
@@ -25,7 +27,7 @@ export const getTypeByName = (name: string) => {
   return VANILLA_TYPES.find(type => type.name === name)
 }
 
-export const TYPES_DROPDOWN = VANILLA_TYPES.map(type => ({ label: type.label, name: type.name }));
+export const TYPES_DROPDOWN: DropdownOption[] = VANILLA_TYPES.map(type => ({ label: type.label, name: type.name }));
 
 export const VANILLA_RARITIES = [
   {label: "Starter", name: "basic", src: "common"},
@@ -40,7 +42,7 @@ export const getRarityByName = (name: string) => {
   return VANILLA_RARITIES.find(rarity => rarity.name === name)
 }
 
-export const RARITIES_DROPDOWN = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, name: rarity.name}))
+export const RARITIES_DROPDOWN: DropdownOption[] = VANILLA_RARITIES.map(rarity => ({ label: rarity.label, name: rarity.name}))
 
 export const VANILLA_TARGETS = [
   {label: "Enemy", name: "enemy"},
@@ -57,7 +59,7 @@ export const PROPERTY_OPTIONS = [
   {label: "Yes", name: "yes"},
 ]
 
-export const VANILLA_POWERS = [
+export const VANILLA_POWERS: DropdownOption[] = [
   {label: "Weak", name: "weak"},
   {label: "Vulnerable", name: "vulnerable"},
   // ...

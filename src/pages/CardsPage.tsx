@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { UserDataContext } from "../UserDataContext"
 import type { CardData } from "../utils/userDataTypes"
 import { PlusIcon } from "@heroicons/react/24/solid"
-import Button from "../components/Button"
+import Button from "../components/generic/Button"
 import StsCard from "../components/StsCard"
 import EditStsCard from "../components/EditStsCard"
 

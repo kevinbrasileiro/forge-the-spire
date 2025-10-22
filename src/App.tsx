@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/generic/Sidebar";
 import CardsPage from "./pages/CardsPage";
 import ConfigPage from "./pages/ConfigPage";
 import { UserDataProvider } from "./UserDataContext";

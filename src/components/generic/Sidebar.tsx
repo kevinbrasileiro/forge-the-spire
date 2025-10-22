@@ -2,7 +2,7 @@ import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, CloudArrowUpIcon
 import { NavLink } from "react-router";
 import Tooltip from "./Tooltip";
 import { useContext } from "react";
-import { UserDataContext } from "../UserDataContext";
+import { UserDataContext } from "../../UserDataContext";
 
 export default function Sidebar({
 	appVersion = "0.0.0"

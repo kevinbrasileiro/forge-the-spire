@@ -1,8 +1,8 @@
 import { useState } from "react"
-import Button from "./Button"
+import Button from "./generic/Button"
 import { CalculatorIcon, CubeIcon, VariableIcon } from "@heroicons/react/24/solid"
-import { Input } from "./Input"
-import Dropdown from "./Dropdown"
+import { Input } from "./generic/Input"
+import Dropdown from "./generic/Dropdown"
 import type { ActionTemplate } from "../data/actions"
 
 interface VariableInputProps {

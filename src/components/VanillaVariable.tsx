@@ -1,5 +1,5 @@
 import type { CardVariable } from "../utils/userDataTypes"
-import { Input } from "./Input"
+import { Input } from "./generic/Input"
 
 interface VanillaVariableProps {
   variableName: "damage" | "block" | "magic"

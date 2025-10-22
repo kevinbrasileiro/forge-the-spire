@@ -1,7 +1,7 @@
 import { getActionTemplateByName } from "../data/actions"
 import type { CardAction, CardData } from "../utils/userDataTypes"
-import Dropdown from "./Dropdown"
-import { Input } from "./Input"
+import Dropdown from "./generic/Dropdown"
+import { Input } from "./generic/Input"
 import VariableInput from "./VariableInput"
 
 interface EditActionProps {

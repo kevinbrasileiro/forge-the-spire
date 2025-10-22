@@ -1,4 +1,4 @@
-import type { DropdownOption } from "../components/Dropdown"
+import type { DropdownOption } from "../components/generic/Dropdown"
 import { VANILLA_POWERS } from "./card"
 
 export type ActionTemplate = {
@@ -57,7 +57,28 @@ export const ACTIONS_TEMPLATES: ActionTemplate[] = [
       },
     ]
   },
-  // {name: "heal", label: "Heal"},
+  {
+    name: "heal",
+    label: "Heal HP",
+    params: [
+      {
+        name: "amount",
+        type: "variable",
+        label: "Amount",
+      },
+    ]
+  },
+  {
+    name: "losehp",
+    label: "Lose HP",
+    params: [
+      {
+        name: "amount",
+        type: "variable",
+        label: "Amount",
+      },
+    ]
+  },
   {
     name: "draw",
     label: "Draw Cards",
@@ -67,12 +88,21 @@ export const ACTIONS_TEMPLATES: ActionTemplate[] = [
         type: "variable",
         label: "Amount",
       },
+      {
+        name: "from",
+        type: "dropdown",
+        label: "From",
+        options: [
+          {label: "Draw Pile", name: "draw-pile"},
+          {label: "Discard Pile", name: "discard-pile"},
+          {label: "Exhaust", name: "exhaust-pile"},
+        ]
+      }
     ]
   },
   // {name: "discard", label: "Discard Cards"},
   // {name: "exhaust", label: "Exahust Cards"},
   // {name: "energy", label: "Gain Energy"},
-  // {name: "losehp", label: "Lose HP"},
   // {name: "endturn", label: "End Turn"},
 ]
 

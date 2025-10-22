@@ -1,6 +1,6 @@
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@heroicons/react/24/solid"
 import type { CardAction } from "../utils/userDataTypes"
-import Button from "./Button"
+import Button from "./generic/Button"
 
 interface ActionProps {
   action: CardAction
