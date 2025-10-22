@@ -5,9 +5,14 @@ export interface UserData {
 }
 
 export interface ModMeta {
-  modName: string
-  modID: string
+  id: string
+  name: string
+  author: string
+
+  version: string
+  description: string
 }
+
 export interface CardData {
   // INFO
   id: string
