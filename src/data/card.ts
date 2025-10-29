@@ -60,6 +60,9 @@ export const PROPERTY_OPTIONS = [
 ]
 
 export const VANILLA_POWERS: DropdownOption[] = [
+  {label: "Strength", name: "strength"},
+  {label: "Metallicize", name: "metallicize"},
+  {label: "Rage", name: "rage"},
   {label: "Weak", name: "weak"},
   {label: "Vulnerable", name: "vulnerable"},
   // ...

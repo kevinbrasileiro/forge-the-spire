@@ -12,6 +12,7 @@ interface DropdownProps {
   error?: string
   className?: string
   placeholder?: string
+  sorted?: boolean
   value: string
   onChange: (value: string) => void
   options: DropdownOption[]
@@ -22,6 +23,7 @@ export default function Dropdown({
   error,
   className = "",
   placeholder = "Select an option",
+  sorted = false,
   value,
   onChange,
   options,
@@ -143,7 +145,8 @@ export default function Dropdown({
               onMouseDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >
-              {options.map((option) => (
+              {(sorted ? options.sort((a, b) => a.label.localeCompare(b.label)) : options)
+              .map((option) => (
                 <div
                   key={option.name}
                   className={`px-3 py-2 cursor-pointer text-base}

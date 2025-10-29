@@ -53,6 +53,7 @@ export default function EditAction({ action, onChange }: EditActionProps) {
                         value={params?.[paramTemplate.name] as string}
                         onChange={(e) => handleParameterChange(paramTemplate.name, e)}
                         options={paramTemplate.options ?? []}
+                        sorted
                       />
                     )
                   case "variable": 
