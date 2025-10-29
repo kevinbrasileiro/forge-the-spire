@@ -41,7 +41,7 @@ export default function CardsPage() {
           label: "Deal Damage",
           name: "damage",
           params: {
-            "amount": "damage",
+            "amount": "!damage",
           }
         },
         {
@@ -49,7 +49,7 @@ export default function CardsPage() {
           label: "Draw Cards",
           name: "draw",
           params: {
-            "amount": "magic",
+            "amount": "!magic",
             "from": "draw-pile",
           }
         },

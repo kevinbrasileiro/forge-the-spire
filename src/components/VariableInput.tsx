@@ -4,6 +4,7 @@ import { CalculatorIcon, CubeIcon, VariableIcon } from "@heroicons/react/24/soli
 import { Input } from "./generic/Input"
 import Dropdown from "./generic/Dropdown"
 import type { ActionTemplate } from "../data/actions"
+import Tooltip from "./generic/Tooltip"
 
 interface VariableInputProps {
   paramTemplate: ActionTemplate['params'][0]
@@ -20,7 +21,7 @@ function getModeFromValue(value?: string | number): "fixed" | "variable" | "cost
 }
 
 function stripPrefix(value?: string | number): string {
-  return String(value ?? "").replace(/^!|^GAME\.|^X/, "")
+  return String(value ?? "").replace(/^!|^G\.|^X/, "")
 }
 
 export default function VariableInput({ paramTemplate, value, onChange }: VariableInputProps) {
@@ -38,7 +39,7 @@ export default function VariableInput({ paramTemplate, value, onChange }: Variab
         onChange(paramTemplate.name, `!damage`)
         break
       case "game":
-        onChange(paramTemplate.name, `GAME.attacks_played_this_turn`)
+        onChange(paramTemplate.name, `G.attacks_played_this_turn`)
         break
       case "cost":
         onChange(paramTemplate.name, "X")
@@ -46,32 +47,34 @@ export default function VariableInput({ paramTemplate, value, onChange }: Variab
     }
   }
 
-  // TODO: FIX TOOLTIPS AND ADD IT HERE
   return (
     <div className="flex flex-col justify-center gap-y-2 bg-black-light rounded-lg p-3">
       <div className="flex items-center gap-x-1">
         <p className="mr-2">{paramTemplate.label}</p>
-        <Button 
-          icon={<VariableIcon className="w-4 h-4"/>}
-          variant="secondary"
-          className={mode === "variable" ? "bg-primary hover:bg-primary" : ""}
-          onClick={() => handleModeChange("variable")}
-          title="Card Variable"
-        />
-        <Button 
-          icon={<CubeIcon className="w-4 h-4"/>}
-          variant="secondary"
-          className={mode === "game" ? "bg-primary hover:bg-primary" : ""}
-          onClick={() => handleModeChange("game")}
-          title="Game Variable"
-        />
-        <Button 
-          icon={<CalculatorIcon className="w-4 h-4"/>}
-          variant="secondary"
-          className={mode === "cost" ? "bg-primary hover:bg-primary" : ""}
-          onClick={() => handleModeChange("cost")}
-          title="Cost (X)"
-        />
+        <Tooltip content="Card Variable">
+          <Button 
+            icon={<VariableIcon className="w-4 h-4"/>}
+            variant="secondary"
+            className={mode === "variable" ? "bg-primary hover:bg-primary" : ""}
+            onClick={() => handleModeChange("variable")}
+          />
+        </Tooltip>
+        <Tooltip content="Game Variable">
+          <Button 
+            icon={<CubeIcon className="w-4 h-4"/>}
+            variant="secondary"
+            className={mode === "game" ? "bg-primary hover:bg-primary" : ""}
+            onClick={() => handleModeChange("game")}
+          />
+        </Tooltip>
+        <Tooltip content="Cost (X)">
+          <Button 
+            icon={<CalculatorIcon className="w-4 h-4"/>}
+            variant="secondary"
+            className={mode === "cost" ? "bg-primary hover:bg-primary" : ""}
+            onClick={() => handleModeChange("cost")}
+          />
+        </Tooltip>
       </div>
       {(() => {
         switch (mode) {
