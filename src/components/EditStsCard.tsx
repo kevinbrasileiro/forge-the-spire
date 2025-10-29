@@ -83,9 +83,7 @@ export default function EditStsCard({card, onSave, onDelete}: EditStsCardProps) 
     const newAction: CardAction = {
       ...template,
       id: crypto.randomUUID(),
-      params: {
-        "amount-type": "variable",
-      }
+      params: {}
     }
 
     setFormData(prev => ({

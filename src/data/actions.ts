@@ -95,7 +95,7 @@ export const ACTIONS_TEMPLATES: ActionTemplate[] = [
         options: [
           {label: "Draw Pile", name: "draw-pile"},
           {label: "Discard Pile", name: "discard-pile"},
-          {label: "Exhaust", name: "exhaust-pile"},
+          {label: "Exhaust Pile", name: "exhaust-pile"},
         ]
       }
     ]

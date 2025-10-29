@@ -7,24 +7,42 @@ import type { ActionTemplate } from "../data/actions"
 
 interface VariableInputProps {
   paramTemplate: ActionTemplate['params'][0]
-  params: Record<string, string| number>
   value?: string | number
-  onChange: (parameter: string, value: string) => void
+  onChange: (parameter: string, value: string | number) => void
 }
 
-export default function VariableInput({ paramTemplate, params, value, onChange }: VariableInputProps) {
-  const typeParamKey = `${paramTemplate.name}-type`;
-  const initialMode = (params?.[typeParamKey] as "fixed" | "variable" | "cost" | "game") ?? "variable";
+function getModeFromValue(value?: string | number): "fixed" | "variable" | "cost" | "game" {
+  const str = String(value ?? "")
+  if (str.startsWith("!")) return "variable"
+  if (str.startsWith("GAME.")) return "game"
+  if (str.startsWith("X")) return "cost"
+  return "fixed"
+}
 
-  const [mode, setMode] = useState<"fixed" | "variable" | "cost" | "game">(initialMode)
+function stripPrefix(value?: string | number): string {
+  return String(value ?? "").replace(/^!|^GAME\.|^X/, "")
+}
+
+export default function VariableInput({ paramTemplate, value, onChange }: VariableInputProps) {
+  const [mode, setMode] = useState<"fixed" | "variable" | "cost" | "game">(getModeFromValue(value))
 
   const handleModeChange = (changeTo: "variable" | "cost" | "game") => {
     if (changeTo === mode) {
       setMode("fixed")
-      onChange(`${paramTemplate.name}-type`, "fixed")
-    } else {
-      setMode(changeTo)
-      onChange(`${paramTemplate.name}-type`, changeTo)
+      onChange(paramTemplate.name, 0)
+      return
+    }
+    setMode(changeTo)
+    switch (changeTo) {
+      case "variable":
+        onChange(paramTemplate.name, `!damage`)
+        break
+      case "game":
+        onChange(paramTemplate.name, `GAME.attacks_played_this_turn`)
+        break
+      case "cost":
+        onChange(paramTemplate.name, "X")
+        break
     }
   }
 
@@ -58,19 +76,24 @@ export default function VariableInput({ paramTemplate, params, value, onChange }
       {(() => {
         switch (mode) {
           case "fixed":
+          case "cost":
             return (
               <Input
-                type="number"
-                value={value}
+                type="text"
+                value={value ?? ""}
                 onChange={(e) => onChange(paramTemplate.name, e.target.value)}
-                placeholder="0"
+                placeholder={mode === "cost" ? "X or X+1" : "0"}
               />
             )
           case "variable":
+          case "game":
             return (
               <Dropdown 
-                onChange={(e) => onChange(paramTemplate.name, e)}
-                value={value as string}
+                onChange={(e) => onChange(
+                  paramTemplate.name, 
+                  mode === "variable" ? `!${e}` : `GAME.${e}`
+                )}
+                value={stripPrefix(value)}
                 options={[ // TODO: Get list of all created variables
                   {label: "Damage", name: "damage"},
                   {label: "Block", name: "block"},

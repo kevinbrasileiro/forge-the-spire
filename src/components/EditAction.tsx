@@ -59,7 +59,6 @@ export default function EditAction({ action, onChange }: EditActionProps) {
                     return (
                       <VariableInput 
                         paramTemplate={paramTemplate}
-                        params={params}
                         value={params?.[paramTemplate.name]}
                         onChange={handleParameterChange}
                       />
