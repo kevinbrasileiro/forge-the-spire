@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Kreon:wght@300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-game: "Kreon", sans-serif;
+
+  --color-black-light: #1e2a2f;
+  --color-black-dark: #12191c;  
+  --color-primary: #d9663d;
+  --color-secondary: #f29d52;
+  --color-gold: #fef3c6;
+  --color-goldwhite: #fdf5e6;
+  
+  --color-danger: #d93d3d;
+  --color-upgraded: #7cfc00;
+}
+
+@layer utilities {
+    .text-shadow-title {
+    text-shadow: 
+      2px 0 #59564F, -2px 0 #59564F, 0 2px #59564F, 0 -2px #59564F, 
+      1px 1px #59564F, -1px -1px #59564F, 1px -1px #59564F, 
+      -1px 1px #59564F, 2px 2px dimgray, 3px 2px dimgray, 
+      4px 2px dimgray, 2px 1px dimgray, 2px 3px dimgray;
+  }
+  
+  .text-shadow-cost {
+    text-shadow:
+      3px 0px #4C4943,
+      -3px 0px #4C4943,
+      0px 3px #4C4943,
+      0px -3px #4C4943,
+      2px 2px #4C4943,
+      -2px 2px #4C4943,
+      2px -2px #4C4943,
+      -2px -2px #4C4943;
+  }
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  color: var(--color-gold);
+  background-color: var(--color-black-dark);
+  font-family: var(--font-game);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--color-black-dark);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: var(--color-black-light);
+}
