@@ -1,11 +1,19 @@
-import express from 'express';
-const app = express();
-const port = 3000;
+import express, { Request, Response} from "express";
+import cors from "cors"
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+const app = express();
+
+app.use(cors({
+    origin: ["http://localhost:5173"]
+}));
+app.use(express.json({
+  limit: "8mb"
+}));
+
+app.post("/api/build", (req: Request, res: Response) => {
+  res.json(req.body);
 });
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+app.listen(3000, () => {
+  return console.log("Express is listening at http://localhost:3000");
 });

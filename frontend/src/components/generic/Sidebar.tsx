@@ -1,4 +1,4 @@
-import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, CloudArrowUpIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ArrowDownTrayIcon, BeakerIcon, BoltIcon, BookmarkIcon, Cog6ToothIcon, GiftIcon, QuestionMarkCircleIcon, RectangleStackIcon, UserIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router";
 import Tooltip from "./Tooltip";
 import { useContext } from "react";
@@ -19,10 +19,23 @@ const tabs = [
 	{ route: "/powers", label: "Buffs/Debuffs", icon: BoltIcon },
 ];
 
+const buildMod = () => {
+	fetch('http://localhost:3000/api/build', {
+  	method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(userData)
+})
+	.then(response => response.json())
+	.then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+}
+
 const modActions = [
 	{ function: () => console.log("Import") , label: "Import Mod", icon: ArrowDownTrayIcon},
 	{ function: () => console.log("Save") , label: "Save Mod", icon: BookmarkIcon},
-	{ function: () => console.log(userData) , label: "Export Mod", icon: CloudArrowUpIcon},
+	{ function: buildMod, label: "Build Mod", icon: WrenchScrewdriverIcon},
 ]
 
   return (
